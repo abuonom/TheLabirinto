@@ -19,7 +19,7 @@ Ci sono tre livelli di difficoltà che variano a seconda del numero di ostacoli 
 Il robot utilizza tre strategie per muoversi:
 1. **Movimento Casuale (30%)**: Il robot si muove a caso in una delle quattro caselle vicine possibili (parete permettendo).
 2. **Movimento Deciso dal Giocatore (30%)**: Il giocatore decide la direzione del movimento.
-3. **Algoritmo A* (40%)**: La direzione del robot viene calcolata usando l’algoritmo A*.
+3. **Algoritmo A** **(40%)**: La direzione del robot viene calcolata usando l’algoritmo A*.
 
 ### Algoritmo A*
 L'algoritmo A* è un algoritmo di ricerca su grafi che individua un percorso da un nodo iniziale a un nodo goal, utilizzando una stima euristica per classificare ogni nodo. L'algoritmo visita i nodi in base a questa stima euristica. Lo pseudocodice dell'algoritmo è riportato nella sezione sottostante.
@@ -76,6 +76,30 @@ function reconstruct_path(came_from,current_node)
 - **Commenti e Annotazioni:** Inclusi per Javadoc
 - **Interfaccia Grafica:** Utilizzo di strumenti come GUI Designer (IntelliJ, WindowsBuilder) o tools compatibili con JavaFx come Scene Builder.
 
+### Design Patterns Utilizzati
+
+Per il progetto sono stati selezionati i seguenti due design pattern:
+
+### 1. **Strategy Pattern**
+**Scopo: Comportamentale (Object)**
+
+Il **Strategy Pattern** è stato utilizzato per implementare le diverse strategie di movimento del robot. Ogni strategia di movimento (movimento casuale, deciso dal giocatore, algoritmo A*) è stata implementata come una classe separata che implementa una comune interfaccia `MovementStrategy`. Questo permette di cambiare facilmente la strategia di movimento del robot senza modificare il codice che utilizza queste strategie.
+
+**Implementazione:**
+- Creata un'interfaccia `MovementStrategy` con un metodo `move()`.
+- Implementate le classi `RandomMovement`, `PlayerMovement`, e `AStarMovement` che implementano l'interfaccia `MovementStrategy`.
+- La classe `Robot` ha un riferimento a un'istanza di `MovementStrategy` e utilizza il metodo `move()` per decidere il movimento.
+
+### 2. **Builder Pattern**
+**Scopo: Creazionale (Object)**
+
+Il **Builder Pattern** è stato utilizzato per la configurazione iniziale del labirinto, inclusa la disposizione delle caselle e degli ostacoli.
+
+**Implementazione:**
+- Creata una classe `MazeBuilder` con metodi per configurare diversi aspetti del labirinto (dimensioni, ostacoli, ecc.).
+- Implementato un metodo `build()` che restituisce l'istanza di `Maze`.
+- La classe `Maze` contiene la struttura del labirinto e i metodi per gestire gli ostacoli e la posizione del robot.
+
 ## Consegna del Progetto
 
 Il progetto deve essere consegnato tramite email ai docenti o tramite Microsoft Teams. L'archivio consegnato deve includere:
@@ -86,3 +110,7 @@ Il progetto deve essere consegnato tramite email ai docenti o tramite Microsoft 
 
 ### Relazione Sintetica
 La relazione deve essere preparata secondo il template disponibile sulla piattaforma e-learning o su Overleaf: [Overleaf Template](https://www.overleaf.com/).
+
+---
+
+Questi pattern garantiranno una progettazione modulare e flessibile, facilitando l'estensione e la manutenzione del progetto.
