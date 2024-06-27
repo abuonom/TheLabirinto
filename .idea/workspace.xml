@@ -4,7 +4,33 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="46d840c5-3c94-4e7b-98c5-0013596e5ccd" name="Changes" comment="Changed readme.MD" />
+    <list default="true" id="46d840c5-3c94-4e7b-98c5-0013596e5ccd" name="Changes" comment="Changed readme.MD">
+      <change afterPath="$PROJECT_DIR$/images/BACK.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/images/COLLECT.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/images/DEATH.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/images/DOWN.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/images/ENEMY_1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/images/ENEMY_2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/images/ENEMY_3.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/images/EXIT_NO.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/images/EXIT_YES.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/images/LEFT.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/images/RIGHT.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/images/START.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/images/UP.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/images/WALL.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/thelabirinto/graphics/Frame.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/thelabirinto/graphics/Panel.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/thelabirinto/main/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TheLabirinto/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/TheLabirinto/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/TheLabirinto/.idea/misc.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/TheLabirinto/.idea/modules.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/TheLabirinto/.idea/vcs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/TheLabirinto/TheLabirinto.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/TheLabirinto/src/com/thelabirinto/main/Main.java" beforeDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -36,10 +62,9 @@
   "keyToString": {
     "Application.Main.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "git-widget-placeholder": "main",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "/home/alessio/Desktop/git",
+    "last_opened_file_path": "/home/alessio/Desktop/TheLabirinto",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -52,6 +77,14 @@
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/images" />
+    </key>
+  </component>
   <component name="RunManager">
     <configuration name="Main" type="Application" factoryName="Application">
       <option name="ALTERNATIVE_JRE_PATH" value="17" />
@@ -88,6 +121,8 @@
       <workItem from="1718819290575" duration="3548000" />
       <workItem from="1719302566200" duration="52000" />
       <workItem from="1719335505741" duration="3692000" />
+      <workItem from="1719429239936" duration="561000" />
+      <workItem from="1719429883062" duration="21926000" />
     </task>
     <task id="LOCAL-00001" summary="Added readme and main">
       <option name="closed" value="true" />
