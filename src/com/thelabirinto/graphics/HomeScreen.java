@@ -42,7 +42,7 @@ public class HomeScreen extends JPanel {
             public void keyPressed(KeyEvent e) {
                 if (e.getKeyCode() == KeyEvent.VK_SPACE) {
                     mainFrame.showScreen("HighScoreScreen");
-                    mainFrame.getHighScoreScreen().requestFocusInWindow();
+                    mainFrame.getMazeScreen().requestFocusInWindow();
                 }
             }
         });
