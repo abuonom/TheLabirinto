@@ -4,7 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8e1e93c0-55b1-411e-a248-a1b4460c9104" name="Changes" comment="Added all screen, and logic between screen change, added some movement for the robot tile" />
+    <list default="true" id="8e1e93c0-55b1-411e-a248-a1b4460c9104" name="Changes" comment="Deleted readmeCHAT.MD">
+      <change afterPath="$PROJECT_DIR$/src/com/thelabirinto/builder/Maze.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/thelabirinto/builder/MazeBuilder.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/thelabirinto/builder/Position.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/thelabirinto/graphics/MainFrame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/thelabirinto/graphics/MainFrame.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/thelabirinto/main/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/thelabirinto/main/Main.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -49,6 +56,7 @@
     "Application.Main.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "git-widget-placeholder": "main",
+    "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "C:/Users/buono/Desktop/thelabirinto",
     "node.js.detected.package.eslint": "true",
@@ -56,7 +64,7 @@
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "configurable.group.tools",
+    "settings.editor.selected.configurable": "preferences.keymap",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
@@ -97,7 +105,12 @@
       <option name="presentableId" value="Default" />
       <updated>1719926771871</updated>
       <workItem from="1719926773743" duration="5594000" />
-      <workItem from="1719951643828" duration="4520000" />
+      <workItem from="1719951643828" duration="4862000" />
+      <workItem from="1720034106310" duration="775000" />
+      <workItem from="1720099589651" duration="3589000" />
+      <workItem from="1720115957397" duration="3586000" />
+      <workItem from="1720164891404" duration="567000" />
+      <workItem from="1720192891328" duration="8474000" />
     </task>
     <task id="LOCAL-00001" summary="Added all screen, and logic between screen change, added some movement for the robot tile">
       <option name="closed" value="true" />
@@ -107,7 +120,15 @@
       <option name="project" value="LOCAL" />
       <updated>1719957429202</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Deleted readmeCHAT.MD">
+      <option name="closed" value="true" />
+      <created>1719957688052</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1719957688052</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -126,6 +147,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Added all screen, and logic between screen change, added some movement for the robot tile" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added all screen, and logic between screen change, added some movement for the robot tile" />
+    <MESSAGE value="Deleted readmeCHAT.MD" />
+    <option name="LAST_COMMIT_MESSAGE" value="Deleted readmeCHAT.MD" />
   </component>
 </project>
