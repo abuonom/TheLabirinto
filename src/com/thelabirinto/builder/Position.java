@@ -24,4 +24,9 @@ public class Position {
                 ", y=" + y +
                 '}';
     }
+
+    public void setLocation(int newX, int newY) {
+        this.x = newX;
+        this.y = newY;
+    }
 }

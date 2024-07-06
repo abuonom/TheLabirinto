@@ -8,6 +8,7 @@ public final class MazeBuilder {
     private final Random random = new Random();
     private final int windowWidth;
     private final int windowHeight;
+    private final int tileSize;
     private int[][]map;
     private Position robotPosition;
     private Position exitPosition;
@@ -15,6 +16,7 @@ public final class MazeBuilder {
     public MazeBuilder(int windowWidth, int windowHeight, int tileSize) {
         this.windowWidth = windowWidth;
         this.windowHeight = windowHeight;
+        this.tileSize = tileSize;
         int rows = windowHeight / tileSize;
         int cols = windowWidth / tileSize;
         this.map = new int[rows][cols];
@@ -84,6 +86,6 @@ public final class MazeBuilder {
     }
 
     public Maze build(){
-        return new Maze(map,robotPosition,exitPosition,windowWidth,windowHeight);
+        return new Maze(map,robotPosition,exitPosition,windowWidth,windowHeight,tileSize);
     }
 }

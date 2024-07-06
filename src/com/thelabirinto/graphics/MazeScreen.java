@@ -6,34 +6,18 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
 public class MazeScreen extends JPanel {
+    MainFrame mainFrame;
     private Image floorImage;
     private Image wallImage;
     private Image robotImage;
     private JLabel robotLabel;
-    private Point robotPosition;
-
     private final int mazeRows;
     private final int mazeCols;
-    private final int tileSize;
-
-    // Matrice del labirinto (0 = pavimento, 1 = muro, 2 = robot)
-    private final int[][] mazeMatrix = {
-            {0, 0, 0, 0, 1, 0, 0, 0, 0, 0},
-            {0, 1, 1, 0, 1, 0, 1, 1, 1, 0},
-            {0, 0, 0, 0, 1, 0, 0, 0, 1, 0},
-            {0, 1, 0, 1, 1, 1, 1, 0, 1, 0},
-            {0, 1, 0, 0, 0, 0, 1, 0, 0, 0},
-            {0, 1, 1, 1, 1, 0, 1, 1, 1, 0},
-            {0, 0, 0, 0, 1, 0, 0, 0, 1, 0},
-            {1, 1, 1, 0, 1, 0, 1, 0, 1, 0},
-            {0, 0, 0, 0, 0, 0, 1, 0, 0, 0},
-            {0, 1, 1, 1, 1, 1, 1, 1, 1, 2}
-    };
 
     public MazeScreen(MainFrame mainFrame) {
-        this.tileSize = 64;  // TILE_SIZE is fixed
-        this.mazeRows = MainFrame.SCREEN_HEIGHT / tileSize;
-        this.mazeCols = MainFrame.SCREEN_WIDTH / tileSize;
+        this.mainFrame = mainFrame;
+        this.mazeRows = mainFrame.getMaze().getWindowHeight() / mainFrame.getMaze().getTileSize();
+        this.mazeCols = mainFrame.getMaze().getWindowWidth() / mainFrame.getMaze().getTileSize();
 
         loadImages();
         initializeLayout();
@@ -49,7 +33,8 @@ public class MazeScreen extends JPanel {
     private void initializeLayout() {
         setLayout(new BorderLayout());
         JLayeredPane layeredPane = new JLayeredPane();
-        layeredPane.setPreferredSize(new Dimension(mazeCols * tileSize, mazeRows * tileSize));
+        layeredPane.setPreferredSize(new Dimension(mazeCols * mainFrame.getMaze().getTileSize(),
+                mazeRows * mainFrame.getMaze().getTileSize()));
 
         JPanel mazePanel = new JPanel() {
             @Override
@@ -58,14 +43,13 @@ public class MazeScreen extends JPanel {
                 drawMaze(g);
             }
         };
-        mazePanel.setBounds(0, 0, mazeCols * tileSize, mazeRows * tileSize);
+        mazePanel.setBounds(0, 0, mazeCols * mainFrame.getMaze().getTileSize(),
+                mazeRows * mainFrame.getMaze().getTileSize());
         layeredPane.add(mazePanel, JLayeredPane.DEFAULT_LAYER);
 
         robotLabel = new JLabel(new ImageIcon(robotImage));
-        robotPosition = findRobotPosition();
-        robotLabel.setBounds(robotPosition.x * tileSize, robotPosition.y * tileSize, tileSize, tileSize);
+        robotLabel.setBounds(mainFrame.getMaze().getRobotPosition().getX() * mainFrame.getMaze().getTileSize(), mainFrame.getMaze().getRobotPosition().getY() * mainFrame.getMaze().getTileSize(), mainFrame.getMaze().getTileSize(), mainFrame.getMaze().getTileSize());
         layeredPane.add(robotLabel, JLayeredPane.PALETTE_LAYER);
-
         add(layeredPane, BorderLayout.CENTER);
     }
 
@@ -73,27 +57,16 @@ public class MazeScreen extends JPanel {
         for (int y = 0; y < mazeRows; y++) {
             for (int x = 0; x < mazeCols; x++) {
                 Image image = null;
-                if (mazeMatrix[y][x] == 0) {
+                if (mainFrame.getMaze().getMap()[y][x] == 0) {
                     image = floorImage;
-                } else if (mazeMatrix[y][x] == 1) {
+                } else if (mainFrame.getMaze().getMap()[y][x] == 1) {
                     image = wallImage;
                 }
                 if (image != null) {
-                    g.drawImage(image, x * tileSize, y * tileSize, tileSize, tileSize, this);
+                    g.drawImage(image, x * mainFrame.getMaze().getTileSize(), y * mainFrame.getMaze().getTileSize(), mainFrame.getMaze().getTileSize(), mainFrame.getMaze().getTileSize(), this);
                 }
             }
         }
-    }
-
-    private Point findRobotPosition() {
-        for (int y = 0; y < mazeRows; y++) {
-            for (int x = 0; x < mazeCols; x++) {
-                if (mazeMatrix[y][x] == 2) {
-                    return new Point(x, y);
-                }
-            }
-        }
-        return new Point(0, 0); // Default position if not found
     }
 
     private void setupKeyBindings() {
@@ -127,15 +100,15 @@ public class MazeScreen extends JPanel {
     }
 
     private void moveRobot(int dx, int dy) {
-        int newX = robotPosition.x + dx;
-        int newY = robotPosition.y + dy;
+        int newX = mainFrame.getMaze().getRobotPosition().getX() + dx;
+        int newY = mainFrame.getMaze().getRobotPosition().getY() + dy;
 
         if (newX >= 0 && newX < mazeCols && newY >= 0 && newY < mazeRows) {
-            if (mazeMatrix[newY][newX] != 1) { // Check if the new position is not a wall
-                mazeMatrix[robotPosition.y][robotPosition.x] = 0; // Clear the old robot position
-                robotPosition.setLocation(newX, newY);
-                mazeMatrix[newY][newX] = 2; // Set the new robot position
-                robotLabel.setLocation(newX * tileSize, newY * tileSize);
+            if (mainFrame.getMaze().getMap()[newY][newX] != 1) { // Check if the new position is not a wall
+                mainFrame.getMaze().getMap()[mainFrame.getMaze().getRobotPosition().getY()][mainFrame.getMaze().getRobotPosition().getX()] = 0; // Clear the old robot position
+                mainFrame.getMaze().getRobotPosition().setLocation(newX, newY);
+                mainFrame.getMaze().getMap()[newY][newX] = 2; // Set the new robot position
+                robotLabel.setLocation(newX * mainFrame.getMaze().getTileSize(), newY * mainFrame.getMaze().getTileSize());
                 repaint();
             }
         }

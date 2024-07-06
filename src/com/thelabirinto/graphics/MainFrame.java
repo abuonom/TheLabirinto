@@ -1,5 +1,7 @@
 package com.thelabirinto.graphics;
 
+import com.thelabirinto.builder.Maze;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyAdapter;
@@ -7,20 +9,27 @@ import java.awt.event.KeyEvent;
 
 public class MainFrame extends JFrame {
 
-    //Maze maze
-    static final int SCREEN_WIDTH = 600;
-    static final int SCREEN_HEIGHT = 600;
+    private Maze maze;
     private final CardLayout cardLayout;
     private final JPanel mainPanel;
-    HomeScreen homeScreen = new HomeScreen(this);
-    HighScoreScreen highScoreScreen = new HighScoreScreen(this);
-    NameInputScreen nameInputScreen = new NameInputScreen(this);
-    MazeScreen mazeScreen = new MazeScreen(this);
+    HomeScreen homeScreen;
+    HighScoreScreen highScoreScreen;
+    NameInputScreen nameInputScreen;
+    MazeScreen mazeScreen;
 
-    public MainFrame() {
+    public Maze getMaze() {
+        return maze;
+    }
+
+    public MainFrame(Maze maze) {
+        this.maze = maze;
+        homeScreen = new HomeScreen(this);
+        highScoreScreen = new HighScoreScreen(this);
+        nameInputScreen = new NameInputScreen(this);
+        mazeScreen = new MazeScreen(this);
         setTitle("TheLabirinto");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(SCREEN_WIDTH, SCREEN_HEIGHT);
+        setSize(maze.getWindowWidth(), maze.getWindowHeight());
         setLocationRelativeTo(null);
 
         cardLayout = new CardLayout();
@@ -41,12 +50,10 @@ public class MainFrame extends JFrame {
     }
 
     public HomeScreen getHomeScreen() {
-
         return homeScreen;
     }
 
     public HighScoreScreen getHighScoreScreen() {
-
         return highScoreScreen;
     }
 

@@ -6,18 +6,12 @@ import com.thelabirinto.graphics.MainFrame;
 
 public class Main {
     public static void main(String[] args) {
-        MainFrame mainFrame = new MainFrame();
-        mainFrame.setVisible(true);
-
-        int windowWidth = 600;
-        int windowHeight = 600;
-        int tileSize = 40;
 
         MazeBuilder builder;
         Maze maze;
 
         do {
-            builder = new MazeBuilder(windowWidth, windowHeight, tileSize);
+            builder = new MazeBuilder(600, 600, 64);
             maze = builder.addEdges()
                     .addWalls()
                     .addExit()
@@ -25,5 +19,7 @@ public class Main {
                     .build();
         } while (!maze.isPlayable());
             System.out.println(maze);
+        MainFrame mainFrame = new MainFrame(maze);
+        mainFrame.setVisible(true);
     }
     }

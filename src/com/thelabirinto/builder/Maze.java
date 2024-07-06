@@ -8,13 +8,19 @@ public class Maze {
     private final Position exitPosition;
     private final int windowWidth;
     private final int windowHeight;
+    private final int tileSize;
 
-    public Maze(int[][] map, Position robotPosition, Position exitPosition, int windowWidth, int windowHeight) {
+    public int getTileSize() {
+        return tileSize;
+    }
+
+    public Maze(int[][] map, Position robotPosition, Position exitPosition, int windowWidth, int windowHeight, int tileSize) {
         this.map = map;
         this.robotPosition = robotPosition;
         this.exitPosition = exitPosition;
         this.windowWidth = windowWidth;
         this.windowHeight = windowHeight;
+        this.tileSize = tileSize;
     }
 
     public int[][] getMap() {
@@ -64,6 +70,7 @@ public class Maze {
                 floodFill(x, y + 1, visited) ||
                 floodFill(x, y - 1, visited);
     }
+
 
     @Override
     public String toString() {
