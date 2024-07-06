@@ -1,7 +1,5 @@
 package com.thelabirinto.builder;
 
-import java.util.Arrays;
-
 public class Maze {
     private int[][] map;
     private Position robotPosition;
@@ -86,4 +84,9 @@ public class Maze {
         return sb.toString();
     }
 
+    public void updateRobot(Position newRobotPosition) {
+        map[robotPosition.getX()][robotPosition.getY()] = 0;
+        robotPosition = newRobotPosition;
+        map[robotPosition.getX()][robotPosition.getY()] = 3;
+    }
 }

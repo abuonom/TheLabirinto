@@ -4,14 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8e1e93c0-55b1-411e-a248-a1b4460c9104" name="Changes" comment="Added logic between creation of random map, with algorithm Flood-fill for check playbility of map">
+    <list default="true" id="8e1e93c0-55b1-411e-a248-a1b4460c9104" name="Changes" comment="Adapted to get and set all the MazeScreen.java function. Need to fix bug on exit creation">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/thelabirinto/builder/Maze.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/thelabirinto/builder/Maze.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/thelabirinto/builder/MazeBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/thelabirinto/builder/MazeBuilder.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/thelabirinto/builder/Position.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/thelabirinto/builder/Position.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/thelabirinto/graphics/MainFrame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/thelabirinto/graphics/MainFrame.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/thelabirinto/graphics/HomeScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/thelabirinto/graphics/HomeScreen.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/thelabirinto/graphics/MazeScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/thelabirinto/graphics/MazeScreen.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/thelabirinto/main/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/thelabirinto/main/Main.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -111,7 +109,7 @@
       <workItem from="1720099589651" duration="3589000" />
       <workItem from="1720115957397" duration="3586000" />
       <workItem from="1720164891404" duration="567000" />
-      <workItem from="1720192891328" duration="11318000" />
+      <workItem from="1720192891328" duration="17990000" />
     </task>
     <task id="LOCAL-00001" summary="Added all screen, and logic between screen change, added some movement for the robot tile">
       <option name="closed" value="true" />
@@ -137,7 +135,15 @@
       <option name="project" value="LOCAL" />
       <updated>1720279708868</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Adapted to get and set all the MazeScreen.java function. Need to fix bug on exit creation">
+      <option name="closed" value="true" />
+      <created>1720282590000</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1720282590000</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -158,6 +164,7 @@
     <MESSAGE value="Added all screen, and logic between screen change, added some movement for the robot tile" />
     <MESSAGE value="Deleted readmeCHAT.MD" />
     <MESSAGE value="Added logic between creation of random map, with algorithm Flood-fill for check playbility of map" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added logic between creation of random map, with algorithm Flood-fill for check playbility of map" />
+    <MESSAGE value="Adapted to get and set all the MazeScreen.java function. Need to fix bug on exit creation" />
+    <option name="LAST_COMMIT_MESSAGE" value="Adapted to get and set all the MazeScreen.java function. Need to fix bug on exit creation" />
   </component>
 </project>

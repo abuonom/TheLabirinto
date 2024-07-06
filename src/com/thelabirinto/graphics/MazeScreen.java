@@ -1,5 +1,7 @@
 package com.thelabirinto.graphics;
 
+import com.thelabirinto.builder.Position;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyAdapter;
@@ -10,7 +12,7 @@ public class MazeScreen extends JPanel {
     private Image floorImage;
     private Image wallImage;
     private Image robotImage;
-    private JLabel robotLabel;
+    private Image exitImage;
     private final int mazeRows;
     private final int mazeCols;
 
@@ -28,6 +30,7 @@ public class MazeScreen extends JPanel {
         floorImage = new ImageIcon("images/BACK.png").getImage();
         wallImage = new ImageIcon("images/WALL.png").getImage();
         robotImage = new ImageIcon("images/START.png").getImage();
+        exitImage = new ImageIcon("images/EXIT_YES.png").getImage();
     }
 
     private void initializeLayout() {
@@ -47,21 +50,19 @@ public class MazeScreen extends JPanel {
                 mazeRows * mainFrame.getMaze().getTileSize());
         layeredPane.add(mazePanel, JLayeredPane.DEFAULT_LAYER);
 
-        robotLabel = new JLabel(new ImageIcon(robotImage));
-        robotLabel.setBounds(mainFrame.getMaze().getRobotPosition().getX() * mainFrame.getMaze().getTileSize(), mainFrame.getMaze().getRobotPosition().getY() * mainFrame.getMaze().getTileSize(), mainFrame.getMaze().getTileSize(), mainFrame.getMaze().getTileSize());
-        layeredPane.add(robotLabel, JLayeredPane.PALETTE_LAYER);
         add(layeredPane, BorderLayout.CENTER);
     }
 
     private void drawMaze(Graphics g) {
-        for (int y = 0; y < mazeRows; y++) {
-            for (int x = 0; x < mazeCols; x++) {
-                Image image = null;
-                if (mainFrame.getMaze().getMap()[y][x] == 0) {
-                    image = floorImage;
-                } else if (mainFrame.getMaze().getMap()[y][x] == 1) {
-                    image = wallImage;
-                }
+        for (int x= 0; x < mazeRows; x++) {
+            for (int y = 0; y < mazeCols; y++) {
+                Image image = switch (mainFrame.getMaze().getMap()[x][y]) {
+                    case 0 -> floorImage;
+                    case 1 -> wallImage;
+                    case 2 -> exitImage;
+                    case 3 -> robotImage;
+                    default -> null;
+                };
                 if (image != null) {
                     g.drawImage(image, x * mainFrame.getMaze().getTileSize(), y * mainFrame.getMaze().getTileSize(), mainFrame.getMaze().getTileSize(), mainFrame.getMaze().getTileSize(), this);
                 }
@@ -80,37 +81,47 @@ public class MazeScreen extends JPanel {
                 int dx = 0, dy = 0;
 
                 switch (key) {
-                    case KeyEvent.VK_UP:
-                        dy = -1;
-                        break;
-                    case KeyEvent.VK_DOWN:
-                        dy = 1;
-                        break;
-                    case KeyEvent.VK_LEFT:
-                        dx = -1;
-                        break;
-                    case KeyEvent.VK_RIGHT:
-                        dx = 1;
-                        break;
+                    case KeyEvent.VK_UP -> dy = -1;
+                    case KeyEvent.VK_DOWN -> dy = 1;
+                    case KeyEvent.VK_LEFT -> dx = -1;
+                    case KeyEvent.VK_RIGHT -> dx = 1;
                 }
-
                 moveRobot(dx, dy);
             }
         });
     }
 
     private void moveRobot(int dx, int dy) {
-        int newX = mainFrame.getMaze().getRobotPosition().getX() + dx;
-        int newY = mainFrame.getMaze().getRobotPosition().getY() + dy;
+        Position newRobotPosition = mainFrame.getMaze().getRobotPosition();
 
-        if (newX >= 0 && newX < mazeCols && newY >= 0 && newY < mazeRows) {
-            if (mainFrame.getMaze().getMap()[newY][newX] != 1) { // Check if the new position is not a wall
-                mainFrame.getMaze().getMap()[mainFrame.getMaze().getRobotPosition().getY()][mainFrame.getMaze().getRobotPosition().getX()] = 0; // Clear the old robot position
-                mainFrame.getMaze().getRobotPosition().setLocation(newX, newY);
-                mainFrame.getMaze().getMap()[newY][newX] = 2; // Set the new robot position
-                robotLabel.setLocation(newX * mainFrame.getMaze().getTileSize(), newY * mainFrame.getMaze().getTileSize());
-                repaint();
-            }
+        int newX = newRobotPosition.getX() + dx;
+        int newY = newRobotPosition.getY() + dy;
+
+        // Verifica se la nuova posizione è valida
+        if (isValidMove(newX, newY)) {
+            if(mainFrame.getMaze().getMap()[newX][newY] == 2)
+                proceedToNextScreen(mainFrame);
+            newRobotPosition  = new Position(newX, newY);
+            mainFrame.getMaze().updateRobot(newRobotPosition);
+            repaint();
         }
     }
+
+    private void proceedToNextScreen(MainFrame mainFrame) {
+        mainFrame.showScreen("HighScoreScreen");
+        mainFrame.getHighScoreScreen().requestFocusInWindow();
+    }
+
+    // Metodo ausiliario per verificare se una mossa è valida
+    private boolean isValidMove(int x, int y) {
+        // Verifica se le coordinate sono all'interno dei limiti della mappa
+        if (x < 0 || x >= mainFrame.getMaze().getMap().length || y < 0 || y >= mainFrame.getMaze().getMap()[0].length) {
+            return false;
+        }
+
+        // Verifica se la casella sulla mappa è attraversabile (valore 0)
+        return (mainFrame.getMaze().getMap()[x][y] == 0 || mainFrame.getMaze().getMap()[x][y] == 2);
+    }
+
+
 }

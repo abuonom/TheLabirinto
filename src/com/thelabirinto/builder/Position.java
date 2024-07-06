@@ -29,4 +29,9 @@ public class Position {
         this.x = newX;
         this.y = newY;
     }
+
+    public void setLocation(Position newPosition) {
+        this.x = newPosition.getX();
+        this.y = newPosition.getY();
+    }
 }
