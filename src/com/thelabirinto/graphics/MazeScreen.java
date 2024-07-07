@@ -1,11 +1,16 @@
 package com.thelabirinto.graphics;
 
 import com.thelabirinto.builder.Position;
+import com.thelabirinto.strategy.AStarMovement;
+import com.thelabirinto.strategy.MovementStrategy;
+import com.thelabirinto.strategy.PlayerMovement;
+import com.thelabirinto.strategy.RandomMovement;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.util.Random;
 
 public class MazeScreen extends JPanel {
     MainFrame mainFrame;
@@ -15,11 +20,13 @@ public class MazeScreen extends JPanel {
     private Image exitImage;
     private final int mazeRows;
     private final int mazeCols;
+    private final PlayerMovement playerMovement;
 
     public MazeScreen(MainFrame mainFrame) {
         this.mainFrame = mainFrame;
         this.mazeRows = mainFrame.getMaze().getWindowHeight() / mainFrame.getMaze().getTileSize();
         this.mazeCols = mainFrame.getMaze().getWindowWidth() / mainFrame.getMaze().getTileSize();
+        this.playerMovement = new PlayerMovement();
 
         loadImages();
         initializeLayout();
@@ -81,47 +88,47 @@ public class MazeScreen extends JPanel {
                 int dx = 0, dy = 0;
 
                 switch (key) {
-                    case KeyEvent.VK_UP -> dy = -1;
-                    case KeyEvent.VK_DOWN -> dy = 1;
-                    case KeyEvent.VK_LEFT -> dx = -1;
-                    case KeyEvent.VK_RIGHT -> dx = 1;
+                    case KeyEvent.VK_W -> dy = -1;
+                    case KeyEvent.VK_S -> dy = 1;
+                    case KeyEvent.VK_A -> dx = -1;
+                    case KeyEvent.VK_D -> dx = 1;
                 }
-                moveRobot(dx, dy);
+                playerMovement.setDirection(dx,dy);
+                handleMovement();
             }
         });
     }
 
-    private void moveRobot(int dx, int dy) {
-        Position newRobotPosition = mainFrame.getMaze().getRobotPosition();
+    private void handleMovement() {
+        MovementStrategy movementStrategy;
+        Random random = new Random();
+        int strategyChance = random.nextInt(100);
+        System.out.println("HANDLE MOVEMENT");
+        /*if(strategyChance < 30) {
+            System.out.println("RANDOM");
+            movementStrategy = new RandomMovement();
+        } else if (strategyChance < 60) {
+            System.out.println("PLAYER");
+            movementStrategy = playerMovement;
+        } else {
+            System.out.println("ASTAR");
+            movementStrategy = new AStarMovement();
+        }*/
 
-        int newX = newRobotPosition.getX() + dx;
-        int newY = newRobotPosition.getY() + dy;
+        movementStrategy = playerMovement;
 
-        // Verifica se la nuova posizione è valida
-        if (isValidMove(newX, newY)) {
-            if(mainFrame.getMaze().getMap()[newX][newY] == 2)
-                proceedToNextScreen(mainFrame);
-            newRobotPosition  = new Position(newX, newY);
-            mainFrame.getMaze().updateRobot(newRobotPosition);
+        Position currentPos = mainFrame.getMaze().getRobotPosition();
+        Position newPos = movementStrategy.getNextPosition(mainFrame.getMaze(), currentPos);
+
+        if(mainFrame.getMaze().isValidMove(newPos.getX(),newPos.getY()))
+        {
+            mainFrame.getMaze().updateRobot(newPos);
+            System.out.println(mainFrame.getMaze());
             repaint();
         }
     }
-
     private void proceedToNextScreen(MainFrame mainFrame) {
         mainFrame.showScreen("HighScoreScreen");
         mainFrame.getHighScoreScreen().requestFocusInWindow();
     }
-
-    // Metodo ausiliario per verificare se una mossa è valida
-    private boolean isValidMove(int x, int y) {
-        // Verifica se le coordinate sono all'interno dei limiti della mappa
-        if (x < 0 || x >= mainFrame.getMaze().getMap().length || y < 0 || y >= mainFrame.getMaze().getMap()[0].length) {
-            return false;
-        }
-
-        // Verifica se la casella sulla mappa è attraversabile (valore 0)
-        return (mainFrame.getMaze().getMap()[x][y] == 0 || mainFrame.getMaze().getMap()[x][y] == 2);
-    }
-
-
 }

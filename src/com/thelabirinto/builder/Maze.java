@@ -89,4 +89,16 @@ public class Maze {
         robotPosition = newRobotPosition;
         map[robotPosition.getX()][robotPosition.getY()] = 3;
     }
+
+
+    // Metodo ausiliario per verificare se una mossa è valida
+    public boolean isValidMove(int x, int y) {
+        // Verifica se le coordinate sono all'interno dei limiti della mappa
+        if (x < 0 || x >= this.getMap().length || y < 0 || y >= this.getMap()[0].length) {
+            return false;
+        }
+
+        // Verifica se la casella sulla mappa è attraversabile (valore 0)
+        return (this.getMap()[x][y] == 0 || this.getMap()[x][y] == 2);
+    }
 }
