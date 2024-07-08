@@ -71,7 +71,7 @@ public class MazeScreen extends JPanel {
                     default -> null;
                 };
                 if (image != null) {
-                    g.drawImage(image, x * mainFrame.getMaze().getTileSize(), y * mainFrame.getMaze().getTileSize(), mainFrame.getMaze().getTileSize(), mainFrame.getMaze().getTileSize(), this);
+                    g.drawImage(image, y * mainFrame.getMaze().getTileSize(), x * mainFrame.getMaze().getTileSize(), mainFrame.getMaze().getTileSize(), mainFrame.getMaze().getTileSize(), this);
                 }
             }
         }
@@ -88,10 +88,10 @@ public class MazeScreen extends JPanel {
                 int dx = 0, dy = 0;
 
                 switch (key) {
-                    case KeyEvent.VK_W -> dy = -1;
-                    case KeyEvent.VK_S -> dy = 1;
-                    case KeyEvent.VK_A -> dx = -1;
-                    case KeyEvent.VK_D -> dx = 1;
+                    case KeyEvent.VK_W -> dx = -1;
+                    case KeyEvent.VK_S -> dx = 1;
+                    case KeyEvent.VK_A -> dy = -1;
+                    case KeyEvent.VK_D -> dy = 1;
                 }
                 playerMovement.setDirection(dx, dy);
                 System.out.println(mainFrame.getMaze());
