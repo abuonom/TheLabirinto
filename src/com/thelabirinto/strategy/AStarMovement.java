@@ -15,45 +15,44 @@ public class AStarMovement implements MovementStrategy {
 
     private Position aStar(Maze maze, Position start, Position goal) {
         Set<Position> closedSet = new HashSet<>();
-        Set<Position> openSet = new HashSet<>();
+        Map<Position, Double> gScore = new HashMap<>();
+        Map<Position, Double> fScore = new HashMap<>();
+        PriorityQueue<Position> openSet = new PriorityQueue<>(Comparator.comparingDouble(fScore::get));
+        Map<Position, Position> cameFrom = new HashMap<>();
+
+        gScore.put(start, 0.0);
+        fScore.put(start, heuristic(start, goal));
         openSet.add(start);
 
-        Map<Position, Position> cameFrom = new HashMap<>();
-        Map<Position, Integer> gScore = new HashMap<>();
-        gScore.put(start, 0);
-
-        Map<Position, Integer> fScore = new HashMap<>();
-        fScore.put(start, heuristic(start, goal));
-
         while (!openSet.isEmpty()) {
-            Position current = getLowestFScore(openSet, fScore);
+            Position current = openSet.poll();
 
             if (current.equals(goal)) {
-                return reconstructPath(cameFrom, current).get(1);
+                return reconstructPath(cameFrom, current).get(1); // return the next position in the path
             }
 
-            openSet.remove(current);
             closedSet.add(current);
 
             for (Position neighbor : getNeighbors(maze, current)) {
                 if (closedSet.contains(neighbor)) {
-                    continue;
+                    continue; // skip this neighbor, it's already evaluated
                 }
 
-                int tentativeGScore = gScore.getOrDefault(current, Integer.MAX_VALUE) + 1;
+                double tentativeGScore = gScore.getOrDefault(current, Double.MAX_VALUE) + distanceBetween(current, neighbor);
 
-                if (!openSet.contains(neighbor)) {
-                    openSet.add(neighbor);
-                } else if (tentativeGScore >= gScore.getOrDefault(neighbor, Integer.MAX_VALUE)) {
-                    continue;
+                if (!openSet.contains(neighbor) || tentativeGScore < gScore.getOrDefault(neighbor, Double.MAX_VALUE)) {
+                    cameFrom.put(neighbor, current);
+                    gScore.put(neighbor, tentativeGScore);
+                    fScore.put(neighbor, tentativeGScore + heuristic(neighbor, goal));
+
+                    if (!openSet.contains(neighbor)) {
+                        openSet.add(neighbor);
+                    }
                 }
-
-                cameFrom.put(neighbor, current);
-                gScore.put(neighbor, tentativeGScore);
-                fScore.put(neighbor, gScore.get(neighbor) + heuristic(neighbor, goal));
             }
         }
 
+        // No path found, return start position
         return start;
     }
 
@@ -68,38 +67,31 @@ public class AStarMovement implements MovementStrategy {
         return totalPath;
     }
 
-    private Position getLowestFScore(Set<Position> openSet, Map<Position, Integer> fScore) {
-        Position lowest = null;
-        int minScore = Integer.MAX_VALUE;
-        for (Position pos : openSet) {
-            int score = fScore.getOrDefault(pos, Integer.MAX_VALUE);
-            if (score < minScore) {
-                minScore = score;
-                lowest = pos;
-            }
-        }
-        return lowest;
+    private double heuristic(Position a, Position b) {
+        // Manhattan distance heuristic
+        return Math.abs(a.getX() - b.getX()) + Math.abs(a.getY() - b.getY());
     }
 
-    private int heuristic(Position a, Position b) {
-        return Math.abs(a.getX() - b.getX()) + Math.abs(a.getY() - b.getY());
+    private double distanceBetween(Position a, Position b) {
+        // Assuming a simple grid distance (1 for cardinal directions, sqrt(2) for diagonals)
+        int dx = Math.abs(a.getX() - b.getX());
+        int dy = Math.abs(a.getY() - b.getY());
+        return Math.sqrt(dx * dx + dy * dy);
     }
 
     private List<Position> getNeighbors(Maze maze, Position pos) {
         List<Position> neighbors = new ArrayList<>();
-        int x = pos.getX();
-        int y = pos.getY();
-
         int[][] directions = {
                 {1, 0}, {-1, 0}, {0, 1}, {0, -1}, // cardinal directions
                 {1, 1}, {1, -1}, {-1, 1}, {-1, -1} // diagonal directions
         };
 
         for (int[] direction : directions) {
-            int newX = x + direction[0];
-            int newY = y + direction[1];
+            int newX = pos.getX() + direction[0];
+            int newY = pos.getY() + direction[1];
+            Position neighbor = new Position(newX, newY);
             if (maze.isValidMove(newX, newY)) {
-                neighbors.add(new Position(newX, newY));
+                neighbors.add(neighbor);
             }
         }
         return neighbors;

@@ -2,49 +2,45 @@ package com.thelabirinto.graphics;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 
 public class HomeScreen extends JPanel {
-    public HomeScreen(MainFrame mainFrame){
-        setLayout(new BorderLayout());
+    private final MainFrame mainFrame;
 
-        //Create a panel for the title
-        JPanel titlePanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+    public HomeScreen(MainFrame mainFrame) {
+        this.mainFrame = mainFrame;
+        initializeLayout();
+    }
+
+    private void initializeLayout() {
+        setLayout(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
+
         JLabel titleLabel = new JLabel("TheLabirinto");
-        titleLabel.setFont(new Font("Serif",Font.BOLD,40));
-        titlePanel.add(titleLabel);
-        add(titlePanel,BorderLayout.NORTH);
+        titleLabel.setFont(new Font("Arial", Font.BOLD, 24));
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.insets = new Insets(10, 10, 10, 10);
+        add(titleLabel, gbc);
 
-        //Create a panel for icon and message
-        JPanel centerPanel = new JPanel();
-        centerPanel.setLayout(new BoxLayout(centerPanel,BoxLayout.Y_AXIS));
-        centerPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        JButton easyButton = new JButton("Easy");
+        JButton mediumButton = new JButton("Medium");
+        JButton hardButton = new JButton("Hard");
 
-        JLabel iconLabel = new JLabel();
-        iconLabel.setIcon(new ImageIcon("images/START.png"));
-        iconLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        gbc.gridy = 1;
+        add(easyButton, gbc);
+        gbc.gridy = 2;
+        add(mediumButton, gbc);
+        gbc.gridy = 3;
+        add(hardButton, gbc);
 
-        JLabel messageLabel = new JLabel("Premere SPACE per proseguire");
-        messageLabel.setFont(new Font("Serif", Font.PLAIN, 20));
-        messageLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        easyButton.addActionListener(e -> startGame(5));
+        mediumButton.addActionListener(e -> startGame((int) Math.ceil(2.5)));
+        hardButton.addActionListener(e -> startGame((int) Math.ceil(2.3)));
+    }
 
-        centerPanel.add(iconLabel);
-        centerPanel.add(Box.createRigidArea(new Dimension(0, 20))); // Add some space between icon and text
-        centerPanel.add(messageLabel);
-
-        add(centerPanel, BorderLayout.CENTER);
-        setFocusable(true);
-        requestFocusInWindow();
-
-        addKeyListener(new KeyAdapter() {
-            @Override
-            public void keyPressed(KeyEvent e) {
-                if (e.getKeyCode() == KeyEvent.VK_SPACE) {
-                    mainFrame.showScreen("MazeScreen");
-                    mainFrame.getMazeScreen().requestFocusInWindow();
-                }
-            }
-        });
+    private void startGame(double difficulty) {
+        mainFrame.setDifficulty(difficulty);
+        mainFrame.createMaze();
+        mainFrame.showScreen("HighScoreScreen");
     }
 }

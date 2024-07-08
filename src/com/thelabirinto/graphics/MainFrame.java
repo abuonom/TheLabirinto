@@ -1,11 +1,10 @@
 package com.thelabirinto.graphics;
 
 import com.thelabirinto.builder.Maze;
+import com.thelabirinto.builder.MazeBuilder;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 
 public class MainFrame extends JFrame {
 
@@ -16,20 +15,19 @@ public class MainFrame extends JFrame {
     HighScoreScreen highScoreScreen;
     NameInputScreen nameInputScreen;
     MazeScreen mazeScreen;
+    private double difficulty;
 
     public Maze getMaze() {
         return maze;
     }
 
-    public MainFrame(Maze maze) {
-        this.maze = maze;
+    public MainFrame() {
         homeScreen = new HomeScreen(this);
         highScoreScreen = new HighScoreScreen(this);
         nameInputScreen = new NameInputScreen(this);
-        mazeScreen = new MazeScreen(this);
         setTitle("TheLabirinto");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(maze.getWindowWidth(), maze.getWindowHeight());
+        setSize(600, 600); // Default size before maze creation
         setLocationRelativeTo(null);
 
         cardLayout = new CardLayout();
@@ -38,7 +36,6 @@ public class MainFrame extends JFrame {
         mainPanel.add(homeScreen, "HomeScreen");
         mainPanel.add(highScoreScreen, "HighScoreScreen");
         mainPanel.add(nameInputScreen, "NameInputScreen");
-        mainPanel.add(mazeScreen, "MazeScreen");
         add(mainPanel);
 
         // Show home screen initially
@@ -61,8 +58,32 @@ public class MainFrame extends JFrame {
         return nameInputScreen;
     }
 
+    public void setDifficulty(double difficulty) {
+        this.difficulty = difficulty;
+    }
+
+    public double getDifficulty() {
+        return difficulty;
+    }
+
+    public void createMaze() {
+        MazeBuilder builder;
+        do {
+            builder = new MazeBuilder(600, 600, 64,this.getDifficulty());
+            maze = builder.addEdges()
+                    .addWalls()
+                    .addExit()
+                    .addRobot()
+                    .build();
+        } while (!maze.isPlayable());
+
+        mazeScreen = new MazeScreen(this);
+        mainPanel.add(mazeScreen, "MazeScreen");
+        setSize(maze.getWindowWidth(), maze.getWindowHeight());
+        setLocationRelativeTo(null);
+    }
+
     public MazeScreen getMazeScreen() {
         return mazeScreen;
     }
 }
-

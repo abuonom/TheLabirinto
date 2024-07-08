@@ -1,10 +1,8 @@
 package com.thelabirinto.graphics;
 
 import com.thelabirinto.builder.Position;
-import com.thelabirinto.strategy.AStarMovement;
 import com.thelabirinto.strategy.MovementStrategy;
 import com.thelabirinto.strategy.PlayerMovement;
-import com.thelabirinto.strategy.RandomMovement;
 
 import javax.swing.*;
 import java.awt.*;
@@ -21,6 +19,7 @@ public class MazeScreen extends JPanel {
     private final int mazeRows;
     private final int mazeCols;
     private final PlayerMovement playerMovement;
+    private int difficulty;
 
     public MazeScreen(MainFrame mainFrame) {
         this.mainFrame = mainFrame;
@@ -28,6 +27,7 @@ public class MazeScreen extends JPanel {
         this.mazeCols = mainFrame.getMaze().getWindowWidth() / mainFrame.getMaze().getTileSize();
         this.playerMovement = new PlayerMovement();
 
+        System.out.println(mainFrame.getMaze());
         loadImages();
         initializeLayout();
         setupKeyBindings();
@@ -61,7 +61,7 @@ public class MazeScreen extends JPanel {
     }
 
     private void drawMaze(Graphics g) {
-        for (int x= 0; x < mazeRows; x++) {
+        for (int x = 0; x < mazeRows; x++) {
             for (int y = 0; y < mazeCols; y++) {
                 Image image = switch (mainFrame.getMaze().getMap()[x][y]) {
                     case 0 -> floorImage;
@@ -93,7 +93,8 @@ public class MazeScreen extends JPanel {
                     case KeyEvent.VK_A -> dx = -1;
                     case KeyEvent.VK_D -> dx = 1;
                 }
-                playerMovement.setDirection(dx,dy);
+                playerMovement.setDirection(dx, dy);
+                System.out.println(mainFrame.getMaze());
                 handleMovement();
             }
         });
@@ -103,32 +104,35 @@ public class MazeScreen extends JPanel {
         MovementStrategy movementStrategy;
         Random random = new Random();
         int strategyChance = random.nextInt(100);
-        System.out.println("HANDLE MOVEMENT");
-        /*if(strategyChance < 30) {
-            System.out.println("RANDOM");
-            movementStrategy = new RandomMovement();
-        } else if (strategyChance < 60) {
-            System.out.println("PLAYER");
-            movementStrategy = playerMovement;
-        } else {
-            System.out.println("ASTAR");
-            movementStrategy = new AStarMovement();
-        }*/
 
         movementStrategy = playerMovement;
 
         Position currentPos = mainFrame.getMaze().getRobotPosition();
         Position newPos = movementStrategy.getNextPosition(mainFrame.getMaze(), currentPos);
 
-        if(mainFrame.getMaze().isValidMove(newPos.getX(),newPos.getY()))
-        {
+        // Debugging output to trace the values
+        System.out.println("Current Position: " + currentPos);
+        System.out.println("New Position: " + newPos);
+
+        if (mainFrame.getMaze().isValidMove(newPos.getX(), newPos.getY())) {
+            System.out.println("Move is valid. Updating robot position.");
             mainFrame.getMaze().updateRobot(newPos);
-            System.out.println(mainFrame.getMaze());
             repaint();
+        } else {
+            System.out.println("Move is invalid.");
         }
     }
+
     private void proceedToNextScreen(MainFrame mainFrame) {
         mainFrame.showScreen("HighScoreScreen");
         mainFrame.getHighScoreScreen().requestFocusInWindow();
+    }
+
+    public int getDifficulty() {
+        return difficulty;
+    }
+
+    public void setDifficulty(int difficulty) {
+        this.difficulty = difficulty;
     }
 }

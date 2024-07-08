@@ -4,14 +4,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8e1e93c0-55b1-411e-a248-a1b4460c9104" name="Changes" comment="Fixed movement with arrows, needs to implement movement sudjested by the subject. Adjusted graphics and movement logic with exit also">
-      <change afterPath="$PROJECT_DIR$/src/com/thelabirinto/strategy/AStarMovement.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/thelabirinto/strategy/MovementStrategy.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/thelabirinto/strategy/PlayerMovement.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/thelabirinto/strategy/RandomMovement.java" afterDir="false" />
+    <list default="true" id="8e1e93c0-55b1-411e-a248-a1b4460c9104" name="Changes" comment="Implemented Strategy Pattern, major bug with AStarMovement.java that remain in loop.&#10;RandomMovement.java is a bit different then the subject, because the random movement is choiced only between possible movement.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/thelabirinto/builder/Maze.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/thelabirinto/builder/Maze.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/thelabirinto/builder/MazeBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/thelabirinto/builder/MazeBuilder.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/thelabirinto/graphics/HomeScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/thelabirinto/graphics/HomeScreen.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/thelabirinto/graphics/MainFrame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/thelabirinto/graphics/MainFrame.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/thelabirinto/graphics/MazeScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/thelabirinto/graphics/MazeScreen.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/thelabirinto/main/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/thelabirinto/main/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/thelabirinto/strategy/AStarMovement.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/thelabirinto/strategy/AStarMovement.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/thelabirinto/strategy/PlayerMovement.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/thelabirinto/strategy/PlayerMovement.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -53,24 +54,27 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Application.Main.executor": "Run",
-    "OverrideImplement.generate.javadoc": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "main",
-    "ignore.virus.scanning.warn.message": "true",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/buono/Desktop/thelabirinto",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "preferences.keymap",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.Main.executor&quot;: &quot;Run&quot;,
+    &quot;OverrideImplement.generate.javadoc&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/buono/Desktop/thelabirinto&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.keymap&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RunManager">
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.thelabirinto.main.Main" />
@@ -113,7 +117,10 @@
       <workItem from="1720099589651" duration="3589000" />
       <workItem from="1720115957397" duration="3586000" />
       <workItem from="1720164891404" duration="567000" />
-      <workItem from="1720192891328" duration="26155000" />
+      <workItem from="1720192891328" duration="30253000" />
+      <workItem from="1720426811584" duration="1131000" />
+      <workItem from="1720434568206" duration="594000" />
+      <workItem from="1720441743392" duration="4127000" />
     </task>
     <task id="LOCAL-00001" summary="Added all screen, and logic between screen change, added some movement for the robot tile">
       <option name="closed" value="true" />
@@ -155,7 +162,15 @@
       <option name="project" value="LOCAL" />
       <updated>1720290182154</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="Implemented Strategy Pattern, major bug with AStarMovement.java that remain in loop.&#10;RandomMovement.java is a bit different then the subject, because the random movement is choiced only between possible movement.">
+      <option name="closed" value="true" />
+      <created>1720370512682</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1720370512682</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -178,6 +193,7 @@
     <MESSAGE value="Added logic between creation of random map, with algorithm Flood-fill for check playbility of map" />
     <MESSAGE value="Adapted to get and set all the MazeScreen.java function. Need to fix bug on exit creation" />
     <MESSAGE value="Fixed movement with arrows, needs to implement movement sudjested by the subject. Adjusted graphics and movement logic with exit also" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fixed movement with arrows, needs to implement movement sudjested by the subject. Adjusted graphics and movement logic with exit also" />
+    <MESSAGE value="Implemented Strategy Pattern, major bug with AStarMovement.java that remain in loop.&#10;RandomMovement.java is a bit different then the subject, because the random movement is choiced only between possible movement." />
+    <option name="LAST_COMMIT_MESSAGE" value="Implemented Strategy Pattern, major bug with AStarMovement.java that remain in loop.&#10;RandomMovement.java is a bit different then the subject, because the random movement is choiced only between possible movement." />
   </component>
 </project>

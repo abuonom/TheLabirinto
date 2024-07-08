@@ -2,7 +2,6 @@ package com.thelabirinto.strategy;
 
 import com.thelabirinto.builder.Position;
 import com.thelabirinto.builder.Maze;
-import com.thelabirinto.strategy.MovementStrategy;
 
 public class PlayerMovement implements MovementStrategy {
     private int dx;
@@ -17,8 +16,8 @@ public class PlayerMovement implements MovementStrategy {
     public Position getNextPosition(Maze maze, Position currentPos) {
         int newX = currentPos.getX() + dx;
         int newY = currentPos.getY() + dy;
-        if (maze.isValidMove(newX,newY))
-            return new Position(newX, newY);
-        return currentPos;
+        System.out.println(newX);
+        System.out.println(newY);
+        return new Position(newX, newY);
     }
 }
