@@ -18,16 +18,16 @@ public class MazeScreen extends JPanel {
     private Image exitImage;
     private final int mazeRows;
     private final int mazeCols;
-    private final PlayerMovement playerMovement;
+    private MovementStrategy movementStrategy;
     private int difficulty;
+    private int moveCount; // Contatore delle mosse
+    private JLabel infoLabel; // Label per mostrare le informazioni sulle mosse
 
     public MazeScreen(MainFrame mainFrame) {
         this.mainFrame = mainFrame;
         this.mazeRows = mainFrame.getMaze().getWindowHeight() / mainFrame.getMaze().getTileSize();
         this.mazeCols = mainFrame.getMaze().getWindowWidth() / mainFrame.getMaze().getTileSize();
-        this.playerMovement = new PlayerMovement();
-
-        System.out.println(mainFrame.getMaze());
+        this.moveCount = 0; // Inizializza il contatore delle mosse
         loadImages();
         initializeLayout();
         setupKeyBindings();
@@ -36,7 +36,7 @@ public class MazeScreen extends JPanel {
     private void loadImages() {
         floorImage = new ImageIcon("images/BACK.png").getImage();
         wallImage = new ImageIcon("images/WALL.png").getImage();
-        robotImage = new ImageIcon("images/START.png").getImage();
+        robotImage = new ImageIcon("images/RIGHT.png").getImage();
         exitImage = new ImageIcon("images/EXIT_YES.png").getImage();
     }
 
@@ -56,6 +56,16 @@ public class MazeScreen extends JPanel {
         mazePanel.setBounds(0, 0, mazeCols * mainFrame.getMaze().getTileSize(),
                 mazeRows * mainFrame.getMaze().getTileSize());
         layeredPane.add(mazePanel, JLayeredPane.DEFAULT_LAYER);
+
+        // Creazione della label informativa
+        infoLabel = new JLabel("0\n");
+        infoLabel.setBounds(10, 10, 50, 50); // Posizione e dimensioni della label
+        infoLabel.setOpaque(true);
+        infoLabel.setBackground(new Color(0, 0, 0, 128)); // Sfondo trasparente
+        infoLabel.setForeground(Color.WHITE);
+        infoLabel.setFont(new Font("Arial", Font.BOLD, 16)); // Aumenta la dimensione del font
+
+        layeredPane.add(infoLabel, JLayeredPane.PALETTE_LAYER);
 
         add(layeredPane, BorderLayout.CENTER);
     }
@@ -92,19 +102,21 @@ public class MazeScreen extends JPanel {
                     case KeyEvent.VK_S -> dx = 1;
                     case KeyEvent.VK_A -> dy = -1;
                     case KeyEvent.VK_D -> dy = 1;
+                    default -> {
+                        return;
+                    }
                 }
-                playerMovement.setDirection(dx, dy);
                 System.out.println(mainFrame.getMaze());
-                handleMovement();
+                handleMovement(dx, dy);
             }
         });
     }
 
-    private void handleMovement() {
-        MovementStrategy movementStrategy;
+    private void handleMovement(int dx, int dy) {
         Random random = new Random();
         int strategyChance = random.nextInt(100);
-
+        PlayerMovement playerMovement = new PlayerMovement();
+        playerMovement.setDirection(dx, dy);
         movementStrategy = playerMovement;
 
         Position currentPos = mainFrame.getMaze().getRobotPosition();
@@ -115,17 +127,24 @@ public class MazeScreen extends JPanel {
         System.out.println("New Position: " + newPos);
 
         if (mainFrame.getMaze().isValidMove(newPos.getX(), newPos.getY())) {
-            System.out.println("Move is valid. Updating robot position.");
             mainFrame.getMaze().updateRobot(newPos);
+            mainFrame.getMaze().regenerateMap(mainFrame.getDifficulty());
+            if (mainFrame.getMaze().getRobotPosition().equals(mainFrame.getMaze().getExitPosition()))
+                proceedToNextScreen(mainFrame);
             repaint();
-        } else {
-            System.out.println("Move is invalid.");
+            moveCount++;
+            updateInfoLabel();
         }
     }
 
+    private void updateInfoLabel() {
+        infoLabel.setText(moveCount + "");
+    }
+
     private void proceedToNextScreen(MainFrame mainFrame) {
-        mainFrame.showScreen("HighScoreScreen");
-        mainFrame.getHighScoreScreen().requestFocusInWindow();
+        WinScreen winScreen = new WinScreen(mainFrame);
+        mainFrame.getMainPanel().add(winScreen, "WinScreen");
+        mainFrame.showScreen("WinScreen");
     }
 
     public int getDifficulty() {

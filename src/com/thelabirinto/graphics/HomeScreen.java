@@ -33,14 +33,13 @@ public class HomeScreen extends JPanel {
         gbc.gridy = 3;
         add(hardButton, gbc);
 
-        easyButton.addActionListener(e -> startGame(5));
-        mediumButton.addActionListener(e -> startGame((int) Math.ceil(2.5)));
-        hardButton.addActionListener(e -> startGame((int) Math.ceil(2.3)));
+        easyButton.addActionListener(e -> nextScreen(5));
+        mediumButton.addActionListener(e -> nextScreen((int) Math.ceil(2.5)));
+        hardButton.addActionListener(e -> nextScreen((int) Math.ceil(2.3)));
     }
 
-    private void startGame(double difficulty) {
+    private void nextScreen(double difficulty) {
         mainFrame.setDifficulty(difficulty);
-        mainFrame.createMaze();
         mainFrame.showScreen("HighScoreScreen");
     }
 }

@@ -40,9 +40,8 @@ public class NameInputScreen extends JPanel {
                 String surname = surnameField.getText().trim();
 
                 if (!name.isEmpty() && !surname.isEmpty()) {
+                    mainFrame.createMaze(name,surname);
                     proceedToNextScreen(mainFrame);
-                    // Passa il nome e il cognome a MainFrame o a un'altra classe se necessario
-                    //mainFrame.startGame(name, surname);
                 } else {
                     JOptionPane.showMessageDialog(NameInputScreen.this,
                             "Per favore, inserisci sia il nome che il cognome.",

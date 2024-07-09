@@ -1,5 +1,7 @@
 package com.thelabirinto.builder;
 
+import java.util.Random;
+
 public class Maze {
     private int[][] map;
     private Position robotPosition;
@@ -7,18 +9,20 @@ public class Maze {
     private final int windowWidth;
     private final int windowHeight;
     private final int tileSize;
+    private Player player;
 
     public int getTileSize() {
         return tileSize;
     }
 
-    public Maze(int[][] map, Position robotPosition, Position exitPosition, int windowWidth, int windowHeight, int tileSize) {
+    public Maze(int[][] map, Position robotPosition, Position exitPosition, int windowWidth, int windowHeight, int tileSize, Player player) {
         this.map = map;
         this.robotPosition = robotPosition;
         this.exitPosition = exitPosition;
         this.windowWidth = windowWidth;
         this.windowHeight = windowHeight;
         this.tileSize = tileSize;
+        this.player = player;
     }
 
     public int[][] getMap() {
@@ -88,6 +92,7 @@ public class Maze {
         map[robotPosition.getX()][robotPosition.getY()] = 0;
         robotPosition = newRobotPosition;
         map[robotPosition.getX()][robotPosition.getY()] = 3;
+        player.addMoves();
     }
 
 
@@ -100,5 +105,43 @@ public class Maze {
 
         // Verifica se la casella sulla mappa è attraversabile (valore 0)
         return (this.getMap()[x][y] == 0 || this.getMap()[x][y] == 2);
+    }
+
+    public void regenerateMap(double difficult) {
+        Random random = new Random();
+        int maxObstacles = (int) ((map.length * map[0].length) / difficult);
+        System.out.println(maxObstacles);
+        int obstacle;
+        int x, y;
+
+        do {
+            obstacle = 0;
+
+
+            for (int i = 0; i < map.length; i++) {
+                for (int j = 0; j < map[0].length; j++) {
+                    if (i == 0 || i == map.length - 1 || j == 0 || j == map[0].length - 1) {
+                        map[i][j] = 1;
+                    } else if (map[i][j] != 3 && map[i][j] != 2) {
+                        map[i][j] = 0;
+                    }
+                }
+            }
+            while (obstacle < maxObstacles) {
+                x = random.nextInt(map.length - 2) + 1;
+                y = random.nextInt(map[0].length - 2) + 1;
+                if (map[x][y] == 0) {
+                    map[x][y] = 1;
+                    obstacle++;
+                }
+            }
+            map[robotPosition.getX()][robotPosition.getY()] = 3;
+            map[exitPosition.getX()][exitPosition.getY()] = 2;
+
+        } while (!isPlayable());
+    }
+
+    public Player getPlayer() {
+        return player;
     }
 }

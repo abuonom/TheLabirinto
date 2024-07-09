@@ -1,7 +1,6 @@
 package com.thelabirinto.builder;
 
-import java.util.ArrayList;
-import java.util.List;
+
 import java.util.Random;
 
 public final class MazeBuilder {
@@ -9,11 +8,12 @@ public final class MazeBuilder {
     private final int windowWidth;
     private final int windowHeight;
     private final int tileSize;
-    private int[][]map;
+    private int[][] map;
     private Position robotPosition;
     private Position exitPosition;
     private double difficult;
-    
+    private Player player;
+
     public MazeBuilder(int windowWidth, int windowHeight, int tileSize, double difficult) {
         this.windowWidth = windowWidth;
         this.windowHeight = windowHeight;
@@ -25,18 +25,15 @@ public final class MazeBuilder {
     }
 
     public MazeBuilder addExit() {
-        Random random = new Random();
-        exitPosition = new Position(0,random.nextInt(map[0].length) );
+        exitPosition = new Position(0, random.nextInt(map[0].length));
         map[exitPosition.getX()][exitPosition.getY()] = 2;
         return this;
     }
 
     public MazeBuilder addRobot() {
-        Random random = new Random();
-
         int lastRow = map.length - 1;
         int minCol = 1;
-        int maxCol = map[lastRow].length - 2; // Escludendo l'ultima colonna
+        int maxCol = map[lastRow].length - 2;
         int col = minCol + random.nextInt(maxCol - minCol + 1);
 
         robotPosition = new Position(lastRow, col);
@@ -47,7 +44,6 @@ public final class MazeBuilder {
 
     public MazeBuilder addWalls() {
         int maxObstacles = (int) ((map.length * map[0].length) / difficult);
-        System.out.println(maxObstacles);
         int obstacle = 0;
         int x;
         int y;
@@ -74,7 +70,12 @@ public final class MazeBuilder {
         return this;
     }
 
-    public Maze build(){
-        return new Maze(map,robotPosition,exitPosition,windowWidth,windowHeight,tileSize);
+    public MazeBuilder setPlayer(String name, String surname) {
+        this.player = new Player(name,surname,0);
+        return this;
+    }
+
+    public Maze build() {
+        return new Maze(map, robotPosition, exitPosition, windowWidth, windowHeight, tileSize, player);
     }
 }
