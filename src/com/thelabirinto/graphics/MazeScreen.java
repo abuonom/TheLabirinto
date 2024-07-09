@@ -3,6 +3,8 @@ package com.thelabirinto.graphics;
 import com.thelabirinto.builder.Position;
 import com.thelabirinto.strategy.MovementStrategy;
 import com.thelabirinto.strategy.PlayerMovement;
+import com.thelabirinto.strategy.RandomMovement;
+import com.thelabirinto.strategy.AStarMovement;
 
 import javax.swing.*;
 import java.awt.*;
@@ -20,14 +22,13 @@ public class MazeScreen extends JPanel {
     private final int mazeCols;
     private MovementStrategy movementStrategy;
     private int difficulty;
-    private int moveCount; // Contatore delle mosse
     private JLabel infoLabel; // Label per mostrare le informazioni sulle mosse
+    private final String[] emojiArray = {"🕹️", "⭐", "🎲"};
 
     public MazeScreen(MainFrame mainFrame) {
         this.mainFrame = mainFrame;
         this.mazeRows = mainFrame.getMaze().getWindowHeight() / mainFrame.getMaze().getTileSize();
         this.mazeCols = mainFrame.getMaze().getWindowWidth() / mainFrame.getMaze().getTileSize();
-        this.moveCount = 0; // Inizializza il contatore delle mosse
         loadImages();
         initializeLayout();
         setupKeyBindings();
@@ -58,12 +59,12 @@ public class MazeScreen extends JPanel {
         layeredPane.add(mazePanel, JLayeredPane.DEFAULT_LAYER);
 
         // Creazione della label informativa
-        infoLabel = new JLabel("0\n");
-        infoLabel.setBounds(10, 10, 50, 50); // Posizione e dimensioni della label
+        infoLabel = new JLabel("0" + "🕹️");
+        infoLabel.setBounds(10, 10, 70, 40); // Posizione e dimensioni della label
         infoLabel.setOpaque(true);
         infoLabel.setBackground(new Color(0, 0, 0, 128)); // Sfondo trasparente
         infoLabel.setForeground(Color.WHITE);
-        infoLabel.setFont(new Font("Arial", Font.BOLD, 16)); // Aumenta la dimensione del font
+        infoLabel.setFont(new Font("Segoe UI Emoji", Font.BOLD, 20)); // Usa un font che supporta le emoji
 
         layeredPane.add(infoLabel, JLayeredPane.PALETTE_LAYER);
 
@@ -106,41 +107,37 @@ public class MazeScreen extends JPanel {
                         return;
                     }
                 }
-                System.out.println(mainFrame.getMaze());
                 handleMovement(dx, dy);
             }
         });
     }
 
     private void handleMovement(int dx, int dy) {
+        String emoji;
         Random random = new Random();
         int strategyChance = random.nextInt(100);
+        if (strategyChance < 30) {
+            emoji = emojiArray[0];
+        } else if (strategyChance < 60) {
+            emoji = emojiArray[1];
+        } else {
+            emoji = emojiArray[2];
+        }
         PlayerMovement playerMovement = new PlayerMovement();
         playerMovement.setDirection(dx, dy);
         movementStrategy = playerMovement;
 
         Position currentPos = mainFrame.getMaze().getRobotPosition();
         Position newPos = movementStrategy.getNextPosition(mainFrame.getMaze(), currentPos);
-
-        // Debugging output to trace the values
-        System.out.println("Current Position: " + currentPos);
-        System.out.println("New Position: " + newPos);
-
         if (mainFrame.getMaze().isValidMove(newPos.getX(), newPos.getY())) {
             mainFrame.getMaze().updateRobot(newPos);
             mainFrame.getMaze().regenerateMap(mainFrame.getDifficulty());
             if (mainFrame.getMaze().getRobotPosition().equals(mainFrame.getMaze().getExitPosition()))
                 proceedToNextScreen(mainFrame);
             repaint();
-            moveCount++;
-            updateInfoLabel();
+            infoLabel.setText((mainFrame.getMaze().getPlayer().getMoves() + emoji));
         }
     }
-
-    private void updateInfoLabel() {
-        infoLabel.setText(moveCount + "");
-    }
-
     private void proceedToNextScreen(MainFrame mainFrame) {
         WinScreen winScreen = new WinScreen(mainFrame);
         mainFrame.getMainPanel().add(winScreen, "WinScreen");
