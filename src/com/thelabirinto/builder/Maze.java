@@ -76,8 +76,6 @@ public class Maze {
 
     @Override
     public String toString() {
-        System.out.println("EXIT POSITION" + this.exitPosition);
-        System.out.println("ROBOT POSITION" + this.robotPosition);
         StringBuilder sb = new StringBuilder();
         for (int[] row : map) {
             for (int cell : row) {
@@ -110,7 +108,6 @@ public class Maze {
     public void regenerateMap(double difficult) {
         Random random = new Random();
         int maxObstacles = (int) ((map.length * map[0].length) / difficult);
-        System.out.println(maxObstacles);
         int obstacle;
         int x, y;
 

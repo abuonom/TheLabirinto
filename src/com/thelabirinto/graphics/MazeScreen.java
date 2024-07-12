@@ -62,7 +62,7 @@ public class MazeScreen extends JPanel {
         infoLabel = new JLabel("0" + "🕹️");
         infoLabel.setBounds(10, 10, 70, 40); // Posizione e dimensioni della label
         infoLabel.setOpaque(true);
-        infoLabel.setBackground(new Color(0, 0, 0, 128)); // Sfondo trasparente
+        infoLabel.setBackground(new Color(0, 0, 0, 109)); // Sfondo trasparente
         infoLabel.setForeground(Color.WHITE);
         infoLabel.setFont(new Font("Segoe UI Emoji", Font.BOLD, 20)); // Usa un font che supporta le emoji
 

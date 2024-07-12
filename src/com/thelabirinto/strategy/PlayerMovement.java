@@ -16,8 +16,6 @@ public class PlayerMovement implements MovementStrategy {
     public Position getNextPosition(Maze maze, Position currentPos) {
         int newX = currentPos.getX() + dx;
         int newY = currentPos.getY() + dy;
-        System.out.println(newX);
-        System.out.println(newY);
         return new Position(newX, newY);
     }
 }

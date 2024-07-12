@@ -4,9 +4,26 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8e1e93c0-55b1-411e-a248-a1b4460c9104" name="Changes" comment="Added WinScreen, implemented logic for the label that count moves.&#10;Implemented logic for win">
+    <list default="true" id="8e1e93c0-55b1-411e-a248-a1b4460c9104" name="Changes" comment="Fixed and added emoji for Movement choiche.">
+      <change afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/thelabirinto/connection/DbConnection.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/thelabirinto/main/resources/db.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/thelabirinto.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/thelabirinto/builder/Maze.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/thelabirinto/builder/Maze.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/thelabirinto/builder/MazeBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/thelabirinto/builder/MazeBuilder.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/thelabirinto/builder/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/thelabirinto/builder/Player.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/thelabirinto/graphics/HighScoreScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/thelabirinto/graphics/HighScoreScreen.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/thelabirinto/graphics/HomeScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/thelabirinto/graphics/HomeScreen.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/thelabirinto/graphics/MainFrame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/thelabirinto/graphics/MainFrame.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/thelabirinto/graphics/MazeScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/thelabirinto/graphics/MazeScreen.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/thelabirinto/strategy/PlayerMovement.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/thelabirinto/strategy/PlayerMovement.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -48,28 +65,34 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Application.Main.executor&quot;: &quot;Run&quot;,
-    &quot;OverrideImplement.generate.javadoc&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/buono/Desktop/thelabirinto&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;configurable.group.tools&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "Application.Main.executor": "Run",
+    "OverrideImplement.generate.javadoc": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "git-widget-placeholder": "main",
+    "ignore.virus.scanning.warn.message": "true",
+    "jdk.selected.JAVA_MODULE": "openjdk-22",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/buono/Desktop/Accademy-Java-IBM/SB_ACADEMY_RESTFUL_WEB_SERVICE_PROVIDER",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\buono\Desktop\thelabirinto\src\com\thelabirinto\main\resources" />
+    </key>
     <key name="CopyClassDialog.RECENTS_KEY">
       <recent name="com.thelabirinto.graphics" />
     </key>
@@ -122,7 +145,14 @@
       <workItem from="1720441743392" duration="4217000" />
       <workItem from="1720450790859" duration="7096000" />
       <workItem from="1720509654402" duration="7587000" />
-      <workItem from="1720528709750" duration="3384000" />
+      <workItem from="1720528709750" duration="3541000" />
+      <workItem from="1720545617195" duration="1548000" />
+      <workItem from="1720597870185" duration="665000" />
+      <workItem from="1720616238807" duration="974000" />
+      <workItem from="1720718520996" duration="1032000" />
+      <workItem from="1720719580613" duration="46000" />
+      <workItem from="1720719638841" duration="3439000" />
+      <workItem from="1720769754844" duration="4055000" />
     </task>
     <task id="LOCAL-00001" summary="Added all screen, and logic between screen change, added some movement for the robot tile">
       <option name="closed" value="true" />
@@ -196,7 +226,15 @@
       <option name="project" value="LOCAL" />
       <updated>1720515698194</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="Fixed and added emoji for Movement choiche.">
+      <option name="closed" value="true" />
+      <created>1720532256835</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1720532256835</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -223,7 +261,8 @@
     <MESSAGE value="Added difficult setting, bug discovered in map draw, it mirror the int[][]map.&#10;Changed logic of robot and exit creation, now is everytime on first row for exit and last row for robot" />
     <MESSAGE value="Fixed map bug" />
     <MESSAGE value="Added WinScreen, implemented logic for the label that count moves.&#10;Implemented logic for win" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added WinScreen, implemented logic for the label that count moves.&#10;Implemented logic for win" />
+    <MESSAGE value="Fixed and added emoji for Movement choiche." />
+    <option name="LAST_COMMIT_MESSAGE" value="Fixed and added emoji for Movement choiche." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

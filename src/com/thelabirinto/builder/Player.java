@@ -5,6 +5,7 @@ public class Player {
     private String surname;
     private int moves;
 
+
     public Player(String name, String surname, int moves) {
         this.name = name;
         this.surname = surname;

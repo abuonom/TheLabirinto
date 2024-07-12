@@ -18,7 +18,7 @@ public class HighScoreScreen extends JPanel {
         add(new JScrollPane(scoreArea), BorderLayout.CENTER);
 
         // Etichetta di uscita
-        JLabel exitLabel = new JLabel("Premere SPACE o il pulsante Avanti per proseguire", SwingConstants.CENTER);
+        JLabel exitLabel = new JLabel("Premere il pulsante Avanti per proseguire", SwingConstants.CENTER);
         exitLabel.setFont(new Font("Serif", Font.PLAIN, 20));
         add(exitLabel, BorderLayout.NORTH);
 
@@ -39,22 +39,11 @@ public class HighScoreScreen extends JPanel {
 
         // Carica i punteggi
         loadHighScores(scoreArea);
-
-        // Imposta il focus e il key listener
-        setFocusable(true);
-        requestFocusInWindow();
-        addKeyListener(new KeyAdapter() {
-            @Override
-            public void keyPressed(KeyEvent e) {
-                if (e.getKeyCode() == KeyEvent.VK_SPACE) {
-                    proceedToNextScreen(mainFrame);
-                }
-            }
-        });
     }
 
     private void loadHighScores(JTextArea scoreArea) {
         // Implementazione per caricare i punteggi dal database
+
         scoreArea.setText("Punteggio 1: 100\nPunteggio 2: 90\nPunteggio 3: 80\nPunteggio 4: 70\nPunteggio 5: 60");
     }
 

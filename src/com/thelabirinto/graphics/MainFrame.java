@@ -2,7 +2,7 @@ package com.thelabirinto.graphics;
 
 import com.thelabirinto.builder.Maze;
 import com.thelabirinto.builder.MazeBuilder;
-import com.thelabirinto.builder.Player;
+import com.thelabirinto.connection.DbConnection;
 
 import javax.swing.*;
 import java.awt.*;
@@ -17,6 +17,7 @@ public class MainFrame extends JFrame {
     NameInputScreen nameInputScreen;
     MazeScreen mazeScreen;
     WinScreen winScreen;
+    private DbConnection dbConnection;
     private double difficulty;
     int width;
     int height;
@@ -44,8 +45,21 @@ public class MainFrame extends JFrame {
         mainPanel.add(nameInputScreen, "NameInputScreen");
         add(mainPanel);
 
+        // Initialize DbConnection
+        initializeDbConnection();
+
         // Show home screen initially
         cardLayout.show(mainPanel, "HomeScreen");
+    }
+
+    private void initializeDbConnection() {
+        dbConnection = DbConnection.getInstance();
+        dbConnection.buildConnection();
+        dbConnection.createDatabase(); // Ensure the database and table are created
+    }
+
+    public DbConnection getDbConnection() {
+        return dbConnection;
     }
 
     public void showScreen(String screenName) {
@@ -75,28 +89,25 @@ public class MainFrame extends JFrame {
     public void createMaze(String name, String surname) {
         MazeBuilder builder;
         do {
-            builder = new MazeBuilder(width,height,64,this.getDifficulty());
+            builder = new MazeBuilder(width, height, 64, this.getDifficulty());
             maze = builder.addEdges()
                     .addWalls()
                     .addExit()
                     .addRobot()
-                    .setPlayer(name,surname)
+                    .setPlayer(name, surname)
                     .build();
         } while (!maze.isPlayable());
-
-        System.out.println("QUA ARRIVO");
         mazeScreen = new MazeScreen(this);
         mainPanel.add(mazeScreen, "MazeScreen");
         setSize(maze.getWindowWidth(), maze.getWindowHeight());
         setLocationRelativeTo(null);
-        System.out.println("QUI PURE");
     }
 
     public MazeScreen getMazeScreen() {
         return mazeScreen;
     }
 
-    public WinScreen getWinScreen(){
+    public WinScreen getWinScreen() {
         return winScreen;
     }
 

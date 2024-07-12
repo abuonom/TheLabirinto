@@ -8,10 +8,10 @@ public final class MazeBuilder {
     private final int windowWidth;
     private final int windowHeight;
     private final int tileSize;
-    private int[][] map;
+    private final int[][] map;
     private Position robotPosition;
     private Position exitPosition;
-    private double difficult;
+    private final double difficult;
     private Player player;
 
     public MazeBuilder(int windowWidth, int windowHeight, int tileSize, double difficult) {
