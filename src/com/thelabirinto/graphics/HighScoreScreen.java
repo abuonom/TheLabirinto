@@ -1,21 +1,22 @@
 package com.thelabirinto.graphics;
 
+import com.thelabirinto.builder.Player;
+import com.thelabirinto.connection.DbConnection;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
+import java.sql.Connection;
+import java.util.ArrayList;
 
 public class HighScoreScreen extends JPanel {
     public HighScoreScreen(MainFrame mainFrame) {
         setLayout(new BorderLayout());
 
-        // Area di testo per visualizzare i punteggi
-        JTextArea scoreArea = new JTextArea();
-        scoreArea.setEditable(false);
-        scoreArea.setFont(new Font("Serif", Font.PLAIN, 20));
-        add(new JScrollPane(scoreArea), BorderLayout.CENTER);
+        // Pannello per i punteggi
+        JPanel scorePanel = new JPanel(new GridLayout(10, 5));
+        add(new JScrollPane(scorePanel), BorderLayout.CENTER);
 
         // Etichetta di uscita
         JLabel exitLabel = new JLabel("Premere il pulsante Avanti per proseguire", SwingConstants.CENTER);
@@ -36,15 +37,26 @@ public class HighScoreScreen extends JPanel {
         JPanel buttonPanel = new JPanel();
         buttonPanel.add(nextButton);
         add(buttonPanel, BorderLayout.SOUTH);
-
         // Carica i punteggi
-        loadHighScores(scoreArea);
+        loadHighScores(scorePanel,mainFrame);
     }
 
-    private void loadHighScores(JTextArea scoreArea) {
-        // Implementazione per caricare i punteggi dal database
-
-        scoreArea.setText("Punteggio 1: 100\nPunteggio 2: 90\nPunteggio 3: 80\nPunteggio 4: 70\nPunteggio 5: 60");
+    private void loadHighScores(JPanel scorePanel, MainFrame mainFrame) {
+        try{
+        DbConnection dbConnection = mainFrame.getDbConnection();
+        dbConnection.buildConnection();
+        ArrayList<Player> topPlayers = dbConnection.getTopPlayersByDifficulty(mainFrame.getDifficulty());
+            System.out.println(topPlayers.size());
+            int i = 0;
+            for (Player player : topPlayers) {
+                JLabel scoreLabel = new JLabel((i + 1) + ") " + player.getName() + " " + player.getSurname() + " - " + player.getMoves());
+                scoreLabel.setFont(new Font("Serif", Font.PLAIN, 20));
+                scorePanel.add(scoreLabel);
+                i++;
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
     private void proceedToNextScreen(MainFrame mainFrame) {

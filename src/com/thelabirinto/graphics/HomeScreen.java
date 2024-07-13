@@ -53,6 +53,7 @@ public class HomeScreen extends JPanel {
 
     private void nextScreen(double difficulty) {
         mainFrame.setDifficulty(difficulty);
+        mainFrame.setHighScoreScreen(new HighScoreScreen(mainFrame));
         mainFrame.showScreen("HighScoreScreen");
     }
 }

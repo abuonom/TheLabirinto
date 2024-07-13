@@ -3,14 +3,14 @@ package com.thelabirinto.graphics;
 import com.thelabirinto.builder.Position;
 import com.thelabirinto.strategy.MovementStrategy;
 import com.thelabirinto.strategy.PlayerMovement;
-import com.thelabirinto.strategy.RandomMovement;
-import com.thelabirinto.strategy.AStarMovement;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.util.HashSet;
 import java.util.Random;
+import java.util.Set;
 
 public class MazeScreen extends JPanel {
     MainFrame mainFrame;
@@ -24,6 +24,7 @@ public class MazeScreen extends JPanel {
     private int difficulty;
     private JLabel infoLabel; // Label per mostrare le informazioni sulle mosse
     private final String[] emojiArray = {"🕹️", "⭐", "🎲"};
+    private final Set<Integer> pressedKeys = new HashSet<>();
 
     public MazeScreen(MainFrame mainFrame) {
         this.mainFrame = mainFrame;
@@ -95,21 +96,37 @@ public class MazeScreen extends JPanel {
         addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) {
-                int key = e.getKeyCode();
-                int dx = 0, dy = 0;
+                System.out.println(e);
+                pressedKeys.add(e.getKeyCode());
+                handleKeyPress();
+            }
 
-                switch (key) {
-                    case KeyEvent.VK_W -> dx = -1;
-                    case KeyEvent.VK_S -> dx = 1;
-                    case KeyEvent.VK_A -> dy = -1;
-                    case KeyEvent.VK_D -> dy = 1;
-                    default -> {
-                        return;
-                    }
-                }
-                handleMovement(dx, dy);
+            @Override
+            public void keyReleased(KeyEvent e) {
+                pressedKeys.remove(e.getKeyCode());
             }
         });
+    }
+
+    private void handleKeyPress() {
+        int dx = 0, dy = 0;
+
+        if (pressedKeys.contains(KeyEvent.VK_W)) {
+            dx = -1;
+        }
+        if (pressedKeys.contains(KeyEvent.VK_S)) {
+            dx = 1;
+        }
+        if (pressedKeys.contains(KeyEvent.VK_A)) {
+            dy = -1;
+        }
+        if (pressedKeys.contains(KeyEvent.VK_D)) {
+            dy = 1;
+        }
+
+        if (dx != 0 || dy != 0) {
+            handleMovement(dx, dy);
+        }
     }
 
     private void handleMovement(int dx, int dy) {
@@ -132,14 +149,17 @@ public class MazeScreen extends JPanel {
         if (mainFrame.getMaze().isValidMove(newPos.getX(), newPos.getY())) {
             mainFrame.getMaze().updateRobot(newPos);
             mainFrame.getMaze().regenerateMap(mainFrame.getDifficulty());
-            if (mainFrame.getMaze().getRobotPosition().equals(mainFrame.getMaze().getExitPosition()))
+            if (mainFrame.getMaze().getRobotPosition().equals(mainFrame.getMaze().getExitPosition())) {
+                mainFrame.getDbConnection().insertPlayer(mainFrame.getMaze().getPlayer());
                 proceedToNextScreen(mainFrame);
+            }
             repaint();
-            infoLabel.setText((mainFrame.getMaze().getPlayer().getMoves() + emoji));
+            infoLabel.setText(mainFrame.getMaze().getPlayer().getMoves() + emoji);
         }
     }
+
     private void proceedToNextScreen(MainFrame mainFrame) {
-        WinScreen winScreen = new WinScreen(mainFrame);
+        HighScoreScreen winScreen = new HighScoreScreen(mainFrame);
         mainFrame.getMainPanel().add(winScreen, "WinScreen");
         mainFrame.showScreen("WinScreen");
     }

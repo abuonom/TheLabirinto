@@ -71,7 +71,7 @@ public final class MazeBuilder {
     }
 
     public MazeBuilder setPlayer(String name, String surname) {
-        this.player = new Player(name,surname,0);
+        this.player = new Player(name,surname,0,difficult);
         return this;
     }
 

@@ -16,7 +16,6 @@ public class MainFrame extends JFrame {
     HighScoreScreen highScoreScreen;
     NameInputScreen nameInputScreen;
     MazeScreen mazeScreen;
-    WinScreen winScreen;
     private DbConnection dbConnection;
     private double difficulty;
     int width;
@@ -27,8 +26,8 @@ public class MainFrame extends JFrame {
     }
 
     public MainFrame(int width, int height) {
+        initializeDbConnection();
         homeScreen = new HomeScreen(this);
-        highScoreScreen = new HighScoreScreen(this);
         nameInputScreen = new NameInputScreen(this);
         this.width = width;
         this.height = height;
@@ -41,12 +40,10 @@ public class MainFrame extends JFrame {
         mainPanel = new JPanel(cardLayout);
         // Add screens to the main panel
         mainPanel.add(homeScreen, "HomeScreen");
-        mainPanel.add(highScoreScreen, "HighScoreScreen");
         mainPanel.add(nameInputScreen, "NameInputScreen");
         add(mainPanel);
 
         // Initialize DbConnection
-        initializeDbConnection();
 
         // Show home screen initially
         cardLayout.show(mainPanel, "HomeScreen");
@@ -55,7 +52,8 @@ public class MainFrame extends JFrame {
     private void initializeDbConnection() {
         dbConnection = DbConnection.getInstance();
         dbConnection.buildConnection();
-        dbConnection.createDatabase(); // Ensure the database and table are created
+        dbConnection.createDatabase();
+        System.out.println(dbConnection);
     }
 
     public DbConnection getDbConnection() {
@@ -86,7 +84,7 @@ public class MainFrame extends JFrame {
         return difficulty;
     }
 
-    public void createMaze(String name, String surname) {
+    public void createMaze(String name, String surname, double difficulty) {
         MazeBuilder builder;
         do {
             builder = new MazeBuilder(width, height, 64, this.getDifficulty());
@@ -106,12 +104,12 @@ public class MainFrame extends JFrame {
     public MazeScreen getMazeScreen() {
         return mazeScreen;
     }
-
-    public WinScreen getWinScreen() {
-        return winScreen;
-    }
-
     public JPanel getMainPanel() {
         return mainPanel;
+    }
+
+    public void setHighScoreScreen(HighScoreScreen highScoreScreen) {
+        this.highScoreScreen = highScoreScreen;
+        mainPanel.add(highScoreScreen, "HighScoreScreen");
     }
 }

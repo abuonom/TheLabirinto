@@ -4,26 +4,20 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8e1e93c0-55b1-411e-a248-a1b4460c9104" name="Changes" comment="Fixed and added emoji for Movement choiche.">
-      <change afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/thelabirinto/connection/DbConnection.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/thelabirinto/main/resources/db.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/thelabirinto.iml" afterDir="false" />
+    <list default="true" id="8e1e93c0-55b1-411e-a248-a1b4460c9104" name="Changes" comment="Added DbConnection and logic for query and create connection with DB.">
+      <change afterPath="$PROJECT_DIR$/TODO.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/thelabirinto/builder/Maze.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/thelabirinto/builder/Maze.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/thelabirinto/builder/MazeBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/thelabirinto/builder/MazeBuilder.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/thelabirinto/builder/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/thelabirinto/builder/Player.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/thelabirinto/connection/DbConnection.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/thelabirinto/connection/DbConnection.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/thelabirinto/graphics/HighScoreScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/thelabirinto/graphics/HighScoreScreen.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/thelabirinto/graphics/HomeScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/thelabirinto/graphics/HomeScreen.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/thelabirinto/graphics/MainFrame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/thelabirinto/graphics/MainFrame.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/thelabirinto/graphics/MazeScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/thelabirinto/graphics/MazeScreen.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/thelabirinto/strategy/PlayerMovement.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/thelabirinto/strategy/PlayerMovement.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/thelabirinto/graphics/NameInputScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/thelabirinto/graphics/NameInputScreen.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/thelabirinto/graphics/WinScreen.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/thelabirinto/main/resources/db.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/thelabirinto/main/resources/db.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -76,7 +70,7 @@
     "ignore.virus.scanning.warn.message": "true",
     "jdk.selected.JAVA_MODULE": "openjdk-22",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/buono/Desktop/Accademy-Java-IBM/SB_ACADEMY_RESTFUL_WEB_SERVICE_PROVIDER",
+    "last_opened_file_path": "C:/Users/buono/Desktop/Accademy-Java-IBM/JDBC_CRUD_ONE_TO_MANY",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -152,7 +146,11 @@
       <workItem from="1720718520996" duration="1032000" />
       <workItem from="1720719580613" duration="46000" />
       <workItem from="1720719638841" duration="3439000" />
-      <workItem from="1720769754844" duration="4055000" />
+      <workItem from="1720769754844" duration="4784000" />
+      <workItem from="1720774598192" duration="595000" />
+      <workItem from="1720779716109" duration="917000" />
+      <workItem from="1720815558757" duration="1737000" />
+      <workItem from="1720889402331" duration="6693000" />
     </task>
     <task id="LOCAL-00001" summary="Added all screen, and logic between screen change, added some movement for the robot tile">
       <option name="closed" value="true" />
@@ -234,7 +232,15 @@
       <option name="project" value="LOCAL" />
       <updated>1720532256835</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="Added DbConnection and logic for query and create connection with DB.">
+      <option name="closed" value="true" />
+      <created>1720774169129</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1720774169129</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -262,7 +268,8 @@
     <MESSAGE value="Fixed map bug" />
     <MESSAGE value="Added WinScreen, implemented logic for the label that count moves.&#10;Implemented logic for win" />
     <MESSAGE value="Fixed and added emoji for Movement choiche." />
-    <option name="LAST_COMMIT_MESSAGE" value="Fixed and added emoji for Movement choiche." />
+    <MESSAGE value="Added DbConnection and logic for query and create connection with DB." />
+    <option name="LAST_COMMIT_MESSAGE" value="Added DbConnection and logic for query and create connection with DB." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

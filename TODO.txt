@@ -1,0 +1,3 @@
+-Sistemare grandezza text area input
+-Controllo truncate nome e cognome
+-Implementare chiamate DB

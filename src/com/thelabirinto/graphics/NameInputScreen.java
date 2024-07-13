@@ -40,7 +40,7 @@ public class NameInputScreen extends JPanel {
                 String surname = surnameField.getText().trim();
 
                 if (!name.isEmpty() && !surname.isEmpty()) {
-                    mainFrame.createMaze(name,surname);
+                    mainFrame.createMaze(name,surname,mainFrame.getDifficulty());
                     proceedToNextScreen(mainFrame);
                 } else {
                     JOptionPane.showMessageDialog(NameInputScreen.this,
