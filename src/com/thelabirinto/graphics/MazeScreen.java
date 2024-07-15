@@ -1,6 +1,8 @@
 package com.thelabirinto.graphics;
 
 import com.thelabirinto.builder.Position;
+import com.thelabirinto.factory.ScreenFactory;
+import com.thelabirinto.factory.ScreenType;
 import com.thelabirinto.strategy.MovementStrategy;
 import com.thelabirinto.strategy.PlayerMovement;
 
@@ -20,7 +22,6 @@ public class MazeScreen extends JPanel {
     private Image exitImage;
     private final int mazeRows;
     private final int mazeCols;
-    private MovementStrategy movementStrategy;
     private int difficulty;
     private JLabel infoLabel; // Label per mostrare le informazioni sulle mosse
     private final String[] emojiArray = {"🕹️", "⭐", "🎲"};
@@ -142,10 +143,9 @@ public class MazeScreen extends JPanel {
         }
         PlayerMovement playerMovement = new PlayerMovement();
         playerMovement.setDirection(dx, dy);
-        movementStrategy = playerMovement;
 
         Position currentPos = mainFrame.getMaze().getRobotPosition();
-        Position newPos = movementStrategy.getNextPosition(mainFrame.getMaze(), currentPos);
+        Position newPos = ((MovementStrategy) playerMovement).getNextPosition(mainFrame.getMaze(), currentPos);
         if (mainFrame.getMaze().isValidMove(newPos.getX(), newPos.getY())) {
             mainFrame.getMaze().updateRobot(newPos);
             mainFrame.getMaze().regenerateMap(mainFrame.getDifficulty());
@@ -154,13 +154,14 @@ public class MazeScreen extends JPanel {
                 proceedToNextScreen(mainFrame);
             }
             repaint();
+            mainFrame.getMaze().getPlayer().addMoves();
             infoLabel.setText(mainFrame.getMaze().getPlayer().getMoves() + emoji);
         }
     }
 
     private void proceedToNextScreen(MainFrame mainFrame) {
-        HighScoreScreen winScreen = new HighScoreScreen(mainFrame);
-        mainFrame.getMainPanel().add(winScreen, "WinScreen");
+        ScreenFactory screenFactory = new ScreenFactory(mainFrame);
+        mainFrame.getMainPanel().add(screenFactory.createScreen(ScreenType.HIGH_SCORE), "WinScreen");
         mainFrame.showScreen("WinScreen");
     }
 

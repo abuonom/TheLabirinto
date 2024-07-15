@@ -3,13 +3,13 @@ package com.thelabirinto.builder;
 import java.util.Random;
 
 public class Maze {
-    private int[][] map;
+    private final int[][] map;
     private Position robotPosition;
     private final Position exitPosition;
     private final int windowWidth;
     private final int windowHeight;
     private final int tileSize;
-    private Player player;
+    private final Player player;
 
     public int getTileSize() {
         return tileSize;
@@ -47,12 +47,12 @@ public class Maze {
 
     public boolean isPlayable() {
         if (robotPosition == null || exitPosition == null) {
-            return false;
+            return true;
         }
 
         boolean[][] visited = new boolean[map.length][map[0].length];
 
-        return floodFill(robotPosition.getX(), robotPosition.getY(), visited);
+        return !floodFill(robotPosition.getX(), robotPosition.getY(), visited);
     }
 
 
@@ -90,7 +90,6 @@ public class Maze {
         map[robotPosition.getX()][robotPosition.getY()] = 0;
         robotPosition = newRobotPosition;
         map[robotPosition.getX()][robotPosition.getY()] = 3;
-        player.addMoves();
     }
 
 
@@ -135,7 +134,7 @@ public class Maze {
             map[robotPosition.getX()][robotPosition.getY()] = 3;
             map[exitPosition.getX()][exitPosition.getY()] = 2;
 
-        } while (!isPlayable());
+        } while (isPlayable());
     }
 
     public Player getPlayer() {

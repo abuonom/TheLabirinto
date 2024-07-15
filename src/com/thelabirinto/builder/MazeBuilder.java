@@ -1,7 +1,6 @@
 package com.thelabirinto.builder;
-
-
 import java.util.Random;
+
 
 public final class MazeBuilder {
     private final Random random = new Random();

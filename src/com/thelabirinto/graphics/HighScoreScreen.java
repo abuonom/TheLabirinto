@@ -61,6 +61,5 @@ public class HighScoreScreen extends JPanel {
 
     private void proceedToNextScreen(MainFrame mainFrame) {
         mainFrame.showScreen("NameInputScreen");
-        mainFrame.getNameInputScreen().requestFocusInWindow();
     }
 }

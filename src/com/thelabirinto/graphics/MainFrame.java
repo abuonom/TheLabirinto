@@ -3,23 +3,22 @@ package com.thelabirinto.graphics;
 import com.thelabirinto.builder.Maze;
 import com.thelabirinto.builder.MazeBuilder;
 import com.thelabirinto.connection.DbConnection;
+import com.thelabirinto.factory.ScreenFactory;
+import com.thelabirinto.factory.ScreenType;
 
 import javax.swing.*;
 import java.awt.*;
 
 public class MainFrame extends JFrame {
-
+    private final ScreenFactory screenFactory;
     private Maze maze;
     private final CardLayout cardLayout;
     private final JPanel mainPanel;
-    HomeScreen homeScreen;
-    HighScoreScreen highScoreScreen;
-    NameInputScreen nameInputScreen;
-    MazeScreen mazeScreen;
     private DbConnection dbConnection;
     private double difficulty;
     int width;
     int height;
+
 
     public Maze getMaze() {
         return maze;
@@ -27,10 +26,9 @@ public class MainFrame extends JFrame {
 
     public MainFrame(int width, int height) {
         initializeDbConnection();
-        homeScreen = new HomeScreen(this);
-        nameInputScreen = new NameInputScreen(this);
         this.width = width;
         this.height = height;
+        screenFactory = new ScreenFactory(this);
         setTitle("TheLabirinto");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(width, height); // Default size before maze creation
@@ -39,8 +37,8 @@ public class MainFrame extends JFrame {
         cardLayout = new CardLayout();
         mainPanel = new JPanel(cardLayout);
         // Add screens to the main panel
-        mainPanel.add(homeScreen, "HomeScreen");
-        mainPanel.add(nameInputScreen, "NameInputScreen");
+        mainPanel.add(screenFactory.createScreen(ScreenType.HOME), "HomeScreen");
+        mainPanel.add(screenFactory.createScreen(ScreenType.NAME_INPUT), "NameInputScreen");
         add(mainPanel);
 
         // Initialize DbConnection
@@ -64,18 +62,6 @@ public class MainFrame extends JFrame {
         cardLayout.show(mainPanel, screenName);
     }
 
-    public HomeScreen getHomeScreen() {
-        return homeScreen;
-    }
-
-    public HighScoreScreen getHighScoreScreen() {
-        return highScoreScreen;
-    }
-
-    public NameInputScreen getNameInputScreen() {
-        return nameInputScreen;
-    }
-
     public void setDifficulty(double difficulty) {
         this.difficulty = difficulty;
     }
@@ -94,22 +80,25 @@ public class MainFrame extends JFrame {
                     .addRobot()
                     .setPlayer(name, surname)
                     .build();
-        } while (!maze.isPlayable());
-        mazeScreen = new MazeScreen(this);
-        mainPanel.add(mazeScreen, "MazeScreen");
+        } while (maze.isPlayable());
+        mainPanel.add(screenFactory.createScreen(ScreenType.MAZE), "MazeScreen");
         setSize(maze.getWindowWidth(), maze.getWindowHeight());
         setLocationRelativeTo(null);
     }
 
-    public MazeScreen getMazeScreen() {
-        return mazeScreen;
-    }
     public JPanel getMainPanel() {
         return mainPanel;
     }
 
     public void setHighScoreScreen(HighScoreScreen highScoreScreen) {
-        this.highScoreScreen = highScoreScreen;
         mainPanel.add(highScoreScreen, "HighScoreScreen");
+    }
+
+    public void makeFocus() {
+        for (Component comp : mainPanel.getComponents()) {
+            if (comp.isVisible() && comp instanceof MazeScreen) {
+                comp.requestFocusInWindow();
+            }
+        }
     }
 }

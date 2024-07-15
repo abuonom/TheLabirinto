@@ -2,8 +2,7 @@ package com.thelabirinto.graphics;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+
 
 public class NameInputScreen extends JPanel {
     private final JTextField nameField;
@@ -20,7 +19,7 @@ public class NameInputScreen extends JPanel {
         JLabel nameLabel = new JLabel("Nome:");
         JLabel surnameLabel = new JLabel("Cognome:");
 
-        // Pannello per i campi di input
+        // Pannello per i campi di ingresso
         JPanel inputPanel = new JPanel();
         inputPanel.setLayout(new GridLayout(2, 2, 5, 5));
         inputPanel.add(nameLabel);
@@ -33,21 +32,18 @@ public class NameInputScreen extends JPanel {
         startButton.setFont(new Font("Serif", Font.PLAIN, 20));
 
         // Aggiungi l'ActionListener al pulsante
-        startButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String name = nameField.getText().trim();
-                String surname = surnameField.getText().trim();
+        startButton.addActionListener(e -> {
+            String name = nameField.getText().trim();
+            String surname = surnameField.getText().trim();
 
-                if (!name.isEmpty() && !surname.isEmpty()) {
-                    mainFrame.createMaze(name,surname,mainFrame.getDifficulty());
-                    proceedToNextScreen(mainFrame);
-                } else {
-                    JOptionPane.showMessageDialog(NameInputScreen.this,
-                            "Per favore, inserisci sia il nome che il cognome.",
-                            "Errore di Input",
-                            JOptionPane.ERROR_MESSAGE);
-                }
+            if (!name.isEmpty() && !surname.isEmpty()) {
+                mainFrame.createMaze(name,surname,mainFrame.getDifficulty());
+                proceedToNextScreen(mainFrame);
+            } else {
+                JOptionPane.showMessageDialog(NameInputScreen.this,
+                        "Per favore, inserisci sia il nome che il cognome.",
+                        "Errore di Input",
+                        JOptionPane.ERROR_MESSAGE);
             }
         });
 
@@ -65,6 +61,6 @@ public class NameInputScreen extends JPanel {
 
     private void proceedToNextScreen(MainFrame mainFrame) {
         mainFrame.showScreen("MazeScreen");
-        mainFrame.getMazeScreen().requestFocusInWindow();
+        mainFrame.makeFocus();
     }
 }
