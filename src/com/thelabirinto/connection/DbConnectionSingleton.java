@@ -136,7 +136,7 @@ public class DbConnectionSingleton {
         }
     }
 
-    public void insertPlayer(Player player) {
+    public boolean insertPlayer(Player player) {
         String sqlPlayerInsert = "INSERT INTO player(first_name, last_name, moves, difficulty) VALUES (?, ?, ?, ?)";
         try (Connection conn = getInstance().getConnection();
              PreparedStatement preparedStatement = conn.prepareStatement(sqlPlayerInsert)) {
@@ -146,11 +146,14 @@ public class DbConnectionSingleton {
             preparedStatement.setInt(3, player.getMoves());
             preparedStatement.setString(4, player.getDifficulty());  // Changed to setString
             preparedStatement.executeUpdate();
+            return true; // Success
         } catch (SQLException e) {
             e.printStackTrace();
             // Handle exception: SQL execution error
+            return false; // Failure
         }
     }
+
 
     public ArrayList<Player> getTopPlayersByDifficulty(Difficulty difficulty) {
         String sqlSelectTop5 = "SELECT * FROM player WHERE difficulty = ? ORDER BY moves ASC LIMIT 50";

@@ -97,7 +97,6 @@ public class MazeScreen extends JPanel {
         addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) {
-                System.out.println(e);
                 pressedKeys.add(e.getKeyCode());
                 handleKeyPress();
             }
@@ -112,19 +111,21 @@ public class MazeScreen extends JPanel {
     private void handleKeyPress() {
         int dx = 0, dy = 0;
 
+        // Verificare se sono premuti i tasti per il movimento
         if (pressedKeys.contains(KeyEvent.VK_W)) {
-            dx = -1;
+            dx -= 1;
         }
         if (pressedKeys.contains(KeyEvent.VK_S)) {
-            dx = 1;
+            dx += 1;
         }
         if (pressedKeys.contains(KeyEvent.VK_A)) {
-            dy = -1;
+            dy -= 1;
         }
         if (pressedKeys.contains(KeyEvent.VK_D)) {
-            dy = 1;
+            dy += 1;
         }
 
+        // Se c'è movimento, aggiornare la posizione e incrementare il contatore delle mosse una sola volta
         if (dx != 0 || dy != 0) {
             handleMovement(dx, dy);
         }
@@ -141,18 +142,22 @@ public class MazeScreen extends JPanel {
         } else {
             emoji = emojiArray[2];
         }
-        PlayerMovementStrategy playerMovementStrategy = new PlayerMovementStrategy();
-        playerMovementStrategy.setDirection(dx, dy);
-
+        MovementStrategy movementStrategy = new AStarMovementStrategy();
         Position currentPos = mainFrame.getMaze().getRobotPosition();
-        Position newPos = ((MovementStrategy) playerMovementStrategy).getNextPosition(mainFrame.getMaze(), currentPos);
+        Position newPos = mainFrame.getMaze().getExitPosition();//movementStrategy.getNextPosition(mainFrame.getMaze(), currentPos);
+
         if (mainFrame.getMaze().isValidMove(newPos.getX(), newPos.getY())) {
             mainFrame.getMaze().updateRobot(newPos);
             mainFrame.getMaze().regenerateMap(mainFrame.getDifficulty());
             if (mainFrame.getMaze().getRobotPosition().equals(mainFrame.getMaze().getExitPosition())) {
+                try{
                 mainFrame.getDbConnection().insertPlayer(mainFrame.getMaze().getPlayer());
-                proceedToNextScreen(mainFrame);
+                }catch (Exception e){
+                    e.printStackTrace();
+                    proceedToNextScreen(mainFrame);
+                }
             }
+
             repaint();
             mainFrame.getMaze().getPlayer().addMoves();
             infoLabel.setText(mainFrame.getMaze().getPlayer().getMoves() + emoji);
@@ -160,6 +165,7 @@ public class MazeScreen extends JPanel {
     }
 
     private void proceedToNextScreen(MainFrame mainFrame) {
+        System.out.println("GOIND TO NEXT SCREEN");
         ScreenFactory screenFactory = new ScreenFactory(mainFrame);
         mainFrame.getMainPanel().add(screenFactory.createScreen(ScreenType.HIGH_SCORE), "WinScreen");
         mainFrame.showScreen("WinScreen");
