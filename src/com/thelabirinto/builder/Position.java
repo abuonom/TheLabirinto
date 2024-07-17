@@ -2,7 +2,7 @@ package com.thelabirinto.builder;
 
 import java.util.Objects;
 
-public class Position {
+public class Position{
     private int x;
     private int y;
 

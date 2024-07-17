@@ -1,5 +1,7 @@
 package com.thelabirinto.graphics;
 
+import com.thelabirinto.factory.ScreenType;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -46,14 +48,14 @@ public class HomeScreen extends JPanel {
         gbc.gridy = 4;
         add(hardButton, gbc);
 
-        easyButton.addActionListener(e -> nextScreen(5));
-        mediumButton.addActionListener(e -> nextScreen(2.5));
-        hardButton.addActionListener(e -> nextScreen(2.3));
+        easyButton.addActionListener(e -> proceedToNextScreen(Difficulty.EASY));
+        mediumButton.addActionListener(e -> proceedToNextScreen(Difficulty.MEDIUM));
+        hardButton.addActionListener(e -> proceedToNextScreen(Difficulty.HARD));
     }
 
-    private void nextScreen(double difficulty) {
+    private void proceedToNextScreen(Difficulty difficulty) {
         mainFrame.setDifficulty(difficulty);
-        mainFrame.setHighScoreScreen(new HighScoreScreen(mainFrame));
+        mainFrame.getMainPanel().add(mainFrame.getScreenFactory().createScreen(ScreenType.HIGH_SCORE),"HighScoreScreen");
         mainFrame.showScreen("HighScoreScreen");
     }
 }

@@ -5,7 +5,7 @@ import com.thelabirinto.builder.Maze;
 
 import java.util.*;
 
-public class AStarMovement implements MovementStrategy {
+public class AStarMovementStrategy implements MovementStrategy {
 
     @Override
     public Position getNextPosition(Maze maze, Position currentPos) {

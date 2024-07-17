@@ -1,10 +1,10 @@
 package com.thelabirinto.builder;
 
-public class Player {
+public class Player{
     private String name;
     private String surname;
     private int moves;
-    private double difficulty;
+    private String difficulty;
 
     public Player() {
 
@@ -16,7 +16,7 @@ public class Player {
         this.moves = moves;
     }
 
-    public Player(String name, String surname, int i, double difficult) {
+    public Player(String name, String surname, int i, String difficult) {
         this.name = name;
         this.surname = surname;
         this.moves = i;
@@ -43,7 +43,7 @@ public class Player {
         return moves;
     }
 
-    public double getDifficulty() {
+    public String getDifficulty() {
         return difficulty;
     }
 

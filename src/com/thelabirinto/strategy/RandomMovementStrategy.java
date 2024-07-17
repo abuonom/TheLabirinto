@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class RandomMovement implements MovementStrategy{
+public class RandomMovementStrategy implements MovementStrategy{
     @Override
     public Position getNextPosition(Maze maze, Position currentPosition) {
         List<Position> possibleMoves = new ArrayList<>();

@@ -3,7 +3,7 @@ package com.thelabirinto.factory;
 import com.thelabirinto.graphics.*;
 import javax.swing.*;
 
-public class ScreenFactory {
+public class ScreenFactory{
     private final MainFrame mainFrame;
 
     public ScreenFactory(MainFrame mainFrame) {

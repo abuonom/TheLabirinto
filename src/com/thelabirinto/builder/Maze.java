@@ -1,5 +1,7 @@
 package com.thelabirinto.builder;
 
+import com.thelabirinto.graphics.Difficulty;
+
 import java.util.Random;
 
 public class Maze {
@@ -104,9 +106,9 @@ public class Maze {
         return (this.getMap()[x][y] == 0 || this.getMap()[x][y] == 2);
     }
 
-    public void regenerateMap(double difficult) {
+    public void regenerateMap(Difficulty difficulty) {
         Random random = new Random();
-        int maxObstacles = (int) ((map.length * map[0].length) / difficult);
+        int maxObstacles = (int) ((map.length * map[0].length) / difficulty.getValue());
         int obstacle;
         int x, y;
 

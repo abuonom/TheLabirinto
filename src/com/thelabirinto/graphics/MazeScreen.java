@@ -3,8 +3,9 @@ package com.thelabirinto.graphics;
 import com.thelabirinto.builder.Position;
 import com.thelabirinto.factory.ScreenFactory;
 import com.thelabirinto.factory.ScreenType;
+import com.thelabirinto.strategy.AStarMovementStrategy;
 import com.thelabirinto.strategy.MovementStrategy;
-import com.thelabirinto.strategy.PlayerMovement;
+import com.thelabirinto.strategy.PlayerMovementStrategy;
 
 import javax.swing.*;
 import java.awt.*;
@@ -22,7 +23,6 @@ public class MazeScreen extends JPanel {
     private Image exitImage;
     private final int mazeRows;
     private final int mazeCols;
-    private int difficulty;
     private JLabel infoLabel; // Label per mostrare le informazioni sulle mosse
     private final String[] emojiArray = {"🕹️", "⭐", "🎲"};
     private final Set<Integer> pressedKeys = new HashSet<>();
@@ -141,11 +141,11 @@ public class MazeScreen extends JPanel {
         } else {
             emoji = emojiArray[2];
         }
-        PlayerMovement playerMovement = new PlayerMovement();
-        playerMovement.setDirection(dx, dy);
+        PlayerMovementStrategy playerMovementStrategy = new PlayerMovementStrategy();
+        playerMovementStrategy.setDirection(dx, dy);
 
         Position currentPos = mainFrame.getMaze().getRobotPosition();
-        Position newPos = ((MovementStrategy) playerMovement).getNextPosition(mainFrame.getMaze(), currentPos);
+        Position newPos = ((MovementStrategy) playerMovementStrategy).getNextPosition(mainFrame.getMaze(), currentPos);
         if (mainFrame.getMaze().isValidMove(newPos.getX(), newPos.getY())) {
             mainFrame.getMaze().updateRobot(newPos);
             mainFrame.getMaze().regenerateMap(mainFrame.getDifficulty());
@@ -165,11 +165,4 @@ public class MazeScreen extends JPanel {
         mainFrame.showScreen("WinScreen");
     }
 
-    public int getDifficulty() {
-        return difficulty;
-    }
-
-    public void setDifficulty(int difficulty) {
-        this.difficulty = difficulty;
-    }
 }

@@ -2,7 +2,7 @@ package com.thelabirinto.graphics;
 
 import com.thelabirinto.builder.Maze;
 import com.thelabirinto.builder.MazeBuilder;
-import com.thelabirinto.connection.DbConnection;
+import com.thelabirinto.connection.DbConnectionSingleton;
 import com.thelabirinto.factory.ScreenFactory;
 import com.thelabirinto.factory.ScreenType;
 
@@ -14,11 +14,15 @@ public class MainFrame extends JFrame {
     private Maze maze;
     private final CardLayout cardLayout;
     private final JPanel mainPanel;
-    private DbConnection dbConnection;
-    private double difficulty;
+    private DbConnectionSingleton dbConnection;
+    private Difficulty difficulty;
     int width;
     int height;
 
+
+    public ScreenFactory getScreenFactory() {
+        return screenFactory;
+    }
 
     public Maze getMaze() {
         return maze;
@@ -40,21 +44,21 @@ public class MainFrame extends JFrame {
         mainPanel.add(screenFactory.createScreen(ScreenType.HOME), "HomeScreen");
         mainPanel.add(screenFactory.createScreen(ScreenType.NAME_INPUT), "NameInputScreen");
         add(mainPanel);
-
-        // Initialize DbConnection
-
         // Show home screen initially
         cardLayout.show(mainPanel, "HomeScreen");
     }
 
     private void initializeDbConnection() {
-        dbConnection = DbConnection.getInstance();
+        try {
+        dbConnection = DbConnectionSingleton.getInstance();
         dbConnection.buildConnection();
         dbConnection.createDatabase();
-        System.out.println(dbConnection);
-    }
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+        }
 
-    public DbConnection getDbConnection() {
+    public DbConnectionSingleton getDbConnection() {
         return dbConnection;
     }
 
@@ -62,18 +66,18 @@ public class MainFrame extends JFrame {
         cardLayout.show(mainPanel, screenName);
     }
 
-    public void setDifficulty(double difficulty) {
+    public void setDifficulty(Difficulty difficulty) {
         this.difficulty = difficulty;
     }
 
-    public double getDifficulty() {
+    public Difficulty getDifficulty() {
         return difficulty;
     }
 
-    public void createMaze(String name, String surname, double difficulty) {
+    public void createMaze(String name, String surname, Difficulty difficulty) {
         MazeBuilder builder;
         do {
-            builder = new MazeBuilder(width, height, 64, this.getDifficulty());
+            builder = new MazeBuilder(width, height, 64, difficulty);
             maze = builder.addEdges()
                     .addWalls()
                     .addExit()
@@ -88,10 +92,6 @@ public class MainFrame extends JFrame {
 
     public JPanel getMainPanel() {
         return mainPanel;
-    }
-
-    public void setHighScoreScreen(HighScoreScreen highScoreScreen) {
-        mainPanel.add(highScoreScreen, "HighScoreScreen");
     }
 
     public void makeFocus() {

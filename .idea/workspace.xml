@@ -4,18 +4,22 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8e1e93c0-55b1-411e-a248-a1b4460c9104" name="Changes" comment="Added query logic to game logic.&#10;Changed DcConnection, now the instance is on php not only on DB &quot;thelabirinto&quot;.&#10;Removed WinScreen.java, reused HighScoreScreen.java in logic.">
-      <change afterPath="$PROJECT_DIR$/src/com/thelabirinto/factory/ScreenFactory.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/thelabirinto/factory/ScreenType.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+    <list default="true" id="8e1e93c0-55b1-411e-a248-a1b4460c9104" name="Changes" comment="Added pattern Factory for screen creation, created method GetFocus, that now can be invoked by MainFrame">
+      <change afterPath="$PROJECT_DIR$/src/com/thelabirinto/graphics/Difficulty.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/thelabirinto/builder/Maze.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/thelabirinto/builder/Maze.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/thelabirinto/builder/MazeBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/thelabirinto/builder/MazeBuilder.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/thelabirinto/builder/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/thelabirinto/builder/Player.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/thelabirinto/builder/Position.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/thelabirinto/builder/Position.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/thelabirinto/connection/DbConnection.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/thelabirinto/connection/DbConnectionSingleton.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/thelabirinto/factory/ScreenFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/thelabirinto/factory/ScreenFactory.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/thelabirinto/graphics/HighScoreScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/thelabirinto/graphics/HighScoreScreen.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/thelabirinto/graphics/HomeScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/thelabirinto/graphics/HomeScreen.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/thelabirinto/graphics/MainFrame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/thelabirinto/graphics/MainFrame.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/thelabirinto/graphics/MazeScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/thelabirinto/graphics/MazeScreen.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/thelabirinto/graphics/NameInputScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/thelabirinto/graphics/NameInputScreen.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/thelabirinto/strategy/AStarMovement.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/thelabirinto/strategy/AStarMovementStrategy.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/thelabirinto/strategy/PlayerMovement.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/thelabirinto/strategy/PlayerMovementStrategy.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/thelabirinto/strategy/RandomMovement.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/thelabirinto/strategy/RandomMovementStrategy.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -26,8 +30,8 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Interface" />
-        <option value="Enum" />
         <option value="Class" />
+        <option value="Enum" />
       </list>
     </option>
   </component>
@@ -69,7 +73,7 @@
     &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
     &quot;jdk.selected.JAVA_MODULE&quot;: &quot;openjdk-22&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/buono/Desktop/thelabirinto&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/buono/Desktop/Progetto_Valerio_Del_Trionfo/PROGETTO&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -78,7 +82,7 @@
     &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
     &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
     &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settings.ide.settings.uml&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
@@ -152,7 +156,11 @@
       <workItem from="1720889402331" duration="8548000" />
       <workItem from="1721049533316" duration="1752000" />
       <workItem from="1721066871952" duration="1170000" />
-      <workItem from="1721082022246" duration="1343000" />
+      <workItem from="1721082022246" duration="1405000" />
+      <workItem from="1721115018305" duration="7297000" />
+      <workItem from="1721207317325" duration="3000" />
+      <workItem from="1721207333198" duration="9000" />
+      <workItem from="1721207358321" duration="3692000" />
     </task>
     <task id="LOCAL-00001" summary="Added all screen, and logic between screen change, added some movement for the robot tile">
       <option name="closed" value="true" />
@@ -250,7 +258,15 @@
       <option name="project" value="LOCAL" />
       <updated>1720902369795</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="Added pattern Factory for screen creation, created method GetFocus, that now can be invoked by MainFrame">
+      <option name="closed" value="true" />
+      <created>1721083424501</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1721083424501</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -280,7 +296,8 @@
     <MESSAGE value="Fixed and added emoji for Movement choiche." />
     <MESSAGE value="Added DbConnection and logic for query and create connection with DB." />
     <MESSAGE value="Added query logic to game logic.&#10;Changed DcConnection, now the instance is on php not only on DB &quot;thelabirinto&quot;.&#10;Removed WinScreen.java, reused HighScoreScreen.java in logic." />
-    <option name="LAST_COMMIT_MESSAGE" value="Added query logic to game logic.&#10;Changed DcConnection, now the instance is on php not only on DB &quot;thelabirinto&quot;.&#10;Removed WinScreen.java, reused HighScoreScreen.java in logic." />
+    <MESSAGE value="Added pattern Factory for screen creation, created method GetFocus, that now can be invoked by MainFrame" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added pattern Factory for screen creation, created method GetFocus, that now can be invoked by MainFrame" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -291,5 +308,9 @@
         </breakpoint>
       </breakpoints>
     </breakpoint-manager>
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
   </component>
 </project>

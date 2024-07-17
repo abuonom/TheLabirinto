@@ -1,6 +1,7 @@
 package com.thelabirinto.connection;
 
 import com.thelabirinto.builder.Player;
+import com.thelabirinto.graphics.Difficulty;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -8,16 +9,16 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.Properties;
 
-public class DbConnection {
+public class DbConnectionSingleton {
 
     private static final String PROPERTIES_FILE = "db.properties";
     private static String dbUrl;
     private static String dbUser;
     private static String dbPassword;
     private Connection connection = null;
-    private static DbConnection dbConnectionInstance;
+    private static DbConnectionSingleton dbConnectionInstance;
 
-    private DbConnection() {
+    private DbConnectionSingleton() {
         loadProperties();
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
@@ -67,9 +68,9 @@ public class DbConnection {
         }
     }
 
-    public static DbConnection getInstance() {
+    public static DbConnectionSingleton getInstance() {
         if (dbConnectionInstance == null) {
-            dbConnectionInstance = new DbConnection();
+            dbConnectionInstance = new DbConnectionSingleton();
         }
         return dbConnectionInstance;
     }
@@ -122,15 +123,14 @@ public class DbConnection {
                 "first_name VARCHAR(50), " +
                 "last_name VARCHAR(50), " +
                 "moves INT, " +
-                "difficulty DOUBLE)";
+                "difficulty VARCHAR(50))";  // Changed to VARCHAR(50)
 
         try (Connection conn = getInstance().getConnection();
              Statement stmt = conn.createStatement()) {
             stmt.executeUpdate(createDatabaseSQL);
             switchToDatabase();  // Ensure the connection is using the correct database
             stmt.executeUpdate(createTableSQL);
-            System.out.println("Database and table created successfully.");
-        } catch (SQLException e) {
+            } catch (SQLException e) {
             e.printStackTrace();
             // Handle exception: SQL execution error
         }
@@ -144,28 +144,26 @@ public class DbConnection {
             preparedStatement.setString(1, player.getName());
             preparedStatement.setString(2, player.getSurname());
             preparedStatement.setInt(3, player.getMoves());
-            preparedStatement.setDouble(4, player.getDifficulty());
+            preparedStatement.setString(4, player.getDifficulty());  // Changed to setString
             preparedStatement.executeUpdate();
-            System.out.println("Player inserted successfully.");
         } catch (SQLException e) {
             e.printStackTrace();
             // Handle exception: SQL execution error
         }
     }
 
-    public ArrayList<Player> getTopPlayersByDifficulty(double difficulty) {
-        System.out.println(difficulty);
+    public ArrayList<Player> getTopPlayersByDifficulty(Difficulty difficulty) {
         String sqlSelectTop5 = "SELECT * FROM player WHERE difficulty = ? ORDER BY moves ASC LIMIT 50";
         ArrayList<Player> topPlayers = new ArrayList<>();
         try (Connection conn = getInstance().getConnection();
              PreparedStatement preparedStatement = conn.prepareStatement(sqlSelectTop5)) {
 
-            preparedStatement.setDouble(1, difficulty);
+            preparedStatement.setString(1, difficulty.getName());  // Changed to setString
             ResultSet rs = preparedStatement.executeQuery();
 
             while (rs.next()) {
                 Player player = new Player(rs.getString("first_name"),
-                        rs.getString("last_name"), rs.getInt("moves"));
+                        rs.getString("last_name"), rs.getInt("moves"), rs.getString("difficulty"));
                 topPlayers.add(player);
             }
         } catch (SQLException e) {

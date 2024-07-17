@@ -1,8 +1,10 @@
 package com.thelabirinto.builder;
+import com.thelabirinto.graphics.Difficulty;
+
 import java.util.Random;
 
 
-public final class MazeBuilder {
+public final class MazeBuilder extends Player {
     private final Random random = new Random();
     private final int windowWidth;
     private final int windowHeight;
@@ -10,14 +12,14 @@ public final class MazeBuilder {
     private final int[][] map;
     private Position robotPosition;
     private Position exitPosition;
-    private final double difficult;
+    private final Difficulty difficulty;
     private Player player;
 
-    public MazeBuilder(int windowWidth, int windowHeight, int tileSize, double difficult) {
+    public MazeBuilder(int windowWidth, int windowHeight, int tileSize, Difficulty difficulty) {
         this.windowWidth = windowWidth;
         this.windowHeight = windowHeight;
         this.tileSize = tileSize;
-        this.difficult = difficult;
+        this.difficulty = difficulty;
         int rows = windowHeight / tileSize;
         int cols = windowWidth / tileSize;
         this.map = new int[rows][cols];
@@ -42,7 +44,7 @@ public final class MazeBuilder {
     }
 
     public MazeBuilder addWalls() {
-        int maxObstacles = (int) ((map.length * map[0].length) / difficult);
+        int maxObstacles = (int) ((map.length * map[0].length) / difficulty.getValue());
         int obstacle = 0;
         int x;
         int y;
@@ -70,7 +72,7 @@ public final class MazeBuilder {
     }
 
     public MazeBuilder setPlayer(String name, String surname) {
-        this.player = new Player(name,surname,0,difficult);
+        this.player = new Player(name,surname,0,difficulty.getName());
         return this;
     }
 

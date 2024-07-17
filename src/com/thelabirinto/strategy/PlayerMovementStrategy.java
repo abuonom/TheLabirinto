@@ -3,7 +3,7 @@ package com.thelabirinto.strategy;
 import com.thelabirinto.builder.Position;
 import com.thelabirinto.builder.Maze;
 
-public class PlayerMovement implements MovementStrategy {
+public class PlayerMovementStrategy implements MovementStrategy {
     private int dx;
     private int dy;
 
