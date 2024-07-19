@@ -9,6 +9,9 @@ import com.thelabirinto.factory.ScreenType;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * Frame sul quale sono mostrate tutte le schermate sotto forma di panel
+ */
 public class MainFrame extends JFrame {
     private final ScreenFactory screenFactory;
     private Maze maze;
@@ -28,6 +31,12 @@ public class MainFrame extends JFrame {
         return maze;
     }
 
+    /**
+     * Costruttore
+     * Si occupa anche di inizializzare la connessione col DB,
+     * @param width
+     * @param height
+     */
     public MainFrame(int width, int height) {
         initializeDbConnection();
         this.width = width;
@@ -35,19 +44,22 @@ public class MainFrame extends JFrame {
         screenFactory = new ScreenFactory(this);
         setTitle("TheLabirinto");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(width, height); // Default size before maze creation
+        setSize(width, height); // Size settata manualmente prima della creazione del maze
         setLocationRelativeTo(null);
 
         cardLayout = new CardLayout();
         mainPanel = new JPanel(cardLayout);
-        // Add screens to the main panel
+        //Aggiunge HomeScreen e NameInputScreen al Frame
         mainPanel.add(screenFactory.createScreen(ScreenType.HOME), "HomeScreen");
         mainPanel.add(screenFactory.createScreen(ScreenType.NAME_INPUT), "NameInputScreen");
         add(mainPanel);
-        // Show home screen initially
         cardLayout.show(mainPanel, "HomeScreen");
     }
 
+    /**
+     * Inizializza tramite i metodi di dbConnection la connessione al DB
+     * e associa il singleton al mainframe
+     */
     private void initializeDbConnection() {
         try {
         dbConnection = DbConnectionSingleton.getInstance();
@@ -62,6 +74,10 @@ public class MainFrame extends JFrame {
         return dbConnection;
     }
 
+    /**
+     * Permette di visualizzare una schermata sfruttando le proprietà di cardLayout
+     * @param screenName
+     */
     public void showScreen(String screenName) {
         cardLayout.show(mainPanel, screenName);
     }
@@ -74,6 +90,12 @@ public class MainFrame extends JFrame {
         return difficulty;
     }
 
+    /**
+     * Utilizza la classe Builder "MazeBuilder" per costruire l'oggetto Maze
+     * @param name nome del player
+     * @param surname cognome del player
+     * @param difficulty difficoltà selezionata dal player
+     */
     public void createMaze(String name, String surname, Difficulty difficulty) {
         MazeBuilder builder;
         do {
@@ -84,7 +106,7 @@ public class MainFrame extends JFrame {
                     .addRobot()
                     .setPlayer(name, surname)
                     .build();
-        } while (maze.isPlayable());
+        } while (maze.isPlayable()); //esegue la creazione del maze finchè la mappa non è giocabile
         mainPanel.add(screenFactory.createScreen(ScreenType.MAZE), "MazeScreen");
         setSize(maze.getWindowWidth(), maze.getWindowHeight());
         setLocationRelativeTo(null);
@@ -94,6 +116,9 @@ public class MainFrame extends JFrame {
         return mainPanel;
     }
 
+    /**
+     * Rende il componente focusable, e quindi pronto a ricevere input dall'utente
+     */
     public void makeFocus() {
         for (Component comp : mainPanel.getComponents()) {
             if (comp.isVisible() && comp instanceof MazeScreen) {

@@ -7,7 +7,18 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+/**
+ * Implementazione della strategia di movimento casuale nel labirinto.
+ */
 public class RandomMovementStrategy implements MovementStrategy{
+
+    /**
+     * Restituisce la prossima posizione nel labirinto scegliendo casualmente tra le mosse valide.
+     *
+     * @param maze il labirinto in cui si sta muovendo
+     * @param currentPosition la posizione attuale
+     * @return la prossima posizione
+     */
     @Override
     public Position getNextPosition(Maze maze, Position currentPosition) {
         List<Position> possibleMoves = new ArrayList<>();
@@ -33,6 +44,4 @@ public class RandomMovementStrategy implements MovementStrategy{
         Random random = new Random();
         return possibleMoves.get(random.nextInt(possibleMoves.size()));
     }
-
-
 }

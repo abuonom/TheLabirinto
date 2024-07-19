@@ -5,8 +5,18 @@ import com.thelabirinto.builder.Maze;
 
 import java.util.*;
 
+/**
+ * Implementazione della strategia di movimento A* per trovare il percorso ottimale nel labirinto.
+ */
 public class AStarMovementStrategy implements MovementStrategy {
 
+    /**
+     * Restituisce la prossima posizione nel labirinto usando l'algoritmo A*.
+     *
+     * @param maze il labirinto in cui si sta muovendo
+     * @param currentPos la posizione attuale
+     * @return la prossima posizione
+     */
     @Override
     public Position getNextPosition(Maze maze, Position currentPos) {
         Position goal = maze.getExitPosition();
@@ -26,7 +36,7 @@ public class AStarMovementStrategy implements MovementStrategy {
         while (!openSet.isEmpty()) {
             Position current = getLowestFScore(openSet, fScore);
             if (current.equals(goal)) {
-                return reconstructPath(cameFrom, current).get(1); // Get the next position in the path
+                return reconstructPath(cameFrom, current).get(1); // Ottieni la prossima posizione nel percorso
             }
 
             openSet.remove(current);
@@ -37,7 +47,7 @@ public class AStarMovementStrategy implements MovementStrategy {
                     continue;
                 }
 
-                int tentativeGScore = gScore.get(current) + 1; // Assuming the cost between nodes is always 1
+                int tentativeGScore = gScore.get(current) + 1; // Assumendo che il costo tra i nodi sia sempre 1
 
                 if (!openSet.contains(neighbor)) {
                     openSet.add(neighbor);
@@ -51,13 +61,27 @@ public class AStarMovementStrategy implements MovementStrategy {
             }
         }
 
-        return null; // No path found
+        return null; // Nessun percorso trovato
     }
 
+    /**
+     * Stima il costo euristico tra due posizioni.
+     *
+     * @param a la posizione iniziale
+     * @param b la posizione finale
+     * @return il costo euristico
+     */
     private int heuristicCostEstimate(Position a, Position b) {
         return Math.abs(a.getX() - b.getX()) + Math.abs(a.getY() - b.getY());
     }
 
+    /**
+     * Ottiene la posizione con il punteggio f più basso dall'insieme aperto.
+     *
+     * @param openSet l'insieme aperto
+     * @param fScore la mappa dei punteggi f
+     * @return la posizione con il punteggio f più basso
+     */
     private Position getLowestFScore(Set<Position> openSet, Map<Position, Integer> fScore) {
         Position lowest = null;
         int lowestScore = Integer.MAX_VALUE;
@@ -73,6 +97,13 @@ public class AStarMovementStrategy implements MovementStrategy {
         return lowest;
     }
 
+    /**
+     * Ottiene i vicini validi di una posizione nel labirinto.
+     *
+     * @param pos la posizione attuale
+     * @param maze il labirinto
+     * @return la lista delle posizioni vicine
+     */
     private List<Position> getNeighbors(Position pos, Maze maze) {
         List<Position> neighbors = new ArrayList<>();
         int x = pos.getX();
@@ -94,6 +125,13 @@ public class AStarMovementStrategy implements MovementStrategy {
         return neighbors;
     }
 
+    /**
+     * Ricostruisce il percorso dal punto di partenza alla destinazione.
+     *
+     * @param cameFrom la mappa delle posizioni precedenti
+     * @param current la posizione attuale
+     * @return la lista delle posizioni nel percorso
+     */
     private List<Position> reconstructPath(Map<Position, Position> cameFrom, Position current) {
         List<Position> totalPath = new ArrayList<>();
         totalPath.add(current);

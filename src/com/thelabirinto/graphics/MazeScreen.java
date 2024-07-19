@@ -19,6 +19,9 @@ import java.util.HashSet;
 import java.util.Random;
 import java.util.Set;
 
+/**
+ * Si occupa di gestire la visualizzazione a schermo del Maze e la logica di gioco
+ */
 public class MazeScreen extends JPanel {
     MainFrame mainFrame;
     private Image floorImage;
@@ -31,8 +34,13 @@ public class MazeScreen extends JPanel {
     private final String[] emojiArray = {"🕹️", "🎲", "⭐"};
     private final Set<Integer> pressedKeys = new HashSet<>();
 
+    /**
+     * Costruttore
+     * @param mainFrame
+     */
     public MazeScreen(MainFrame mainFrame) {
         this.mainFrame = mainFrame;
+        //Le dimensioni della matrice del maze, sono dinamiche in base alla dimensione delle texture e del size schermo
         this.mazeRows = mainFrame.getMaze().getWindowHeight() / mainFrame.getMaze().getTileSize();
         this.mazeCols = mainFrame.getMaze().getWindowWidth() / mainFrame.getMaze().getTileSize();
         if (!loadImages()) {
@@ -43,6 +51,10 @@ public class MazeScreen extends JPanel {
         }
     }
 
+    /**
+     * Si occupa di caricare le img dalla cartella resources
+     * @return true se riesce a caricare tutto, false altrimenti
+     */
     private boolean loadImages() {
         String[] imagePaths = {
                 "src/com/thelabirinto/resources/image/BACK.png",
@@ -72,7 +84,10 @@ public class MazeScreen extends JPanel {
         return true;
     }
 
-
+    /**
+     * Se le img non sono state caricare, si occupa di creare una label
+     * per comunicare all'utente e un bottone per uscire dal gioco
+     */
     private void showErrorAndExit() {
         setLayout(new BorderLayout());
 
@@ -103,12 +118,14 @@ public class MazeScreen extends JPanel {
         add(panel, BorderLayout.CENTER);
     }
 
-
+    /**
+     * Prepara il panel per la stampa del Maze a schermo
+     */
     private void initializeLayout() {
         setLayout(new BorderLayout());
         JLayeredPane layeredPane = new JLayeredPane();
-        layeredPane.setPreferredSize(new Dimension(mazeCols * mainFrame.getMaze().getTileSize() /3,
-                mazeRows * mainFrame.getMaze().getTileSize() / 3));
+        layeredPane.setPreferredSize(new Dimension(mazeCols * mainFrame.getMaze().getTileSize(),
+                mazeRows * mainFrame.getMaze().getTileSize()));
 
         JPanel mazePanel = new JPanel() {
             @Override
@@ -134,6 +151,12 @@ public class MazeScreen extends JPanel {
         add(layeredPane, BorderLayout.CENTER);
     }
 
+    /**
+     * Si occupa di renderizzare sullo schermo il Maze
+     * sfruttando il valore della cella in matrice
+     * posiziona uno dei 4 tipi di img
+     * @param g classe astratta necessaria per il render
+     */
     private void drawMaze(Graphics g) {
         for (int x = 0; x < mazeRows; x++) {
             for (int y = 0; y < mazeCols; y++) {
@@ -151,6 +174,9 @@ public class MazeScreen extends JPanel {
         }
     }
 
+    /**
+     * Cattura i valori dei tasti premuti dall'utente
+     */
     private void setupKeyBindings() {
         setFocusable(true);
         requestFocusInWindow();
@@ -169,6 +195,10 @@ public class MazeScreen extends JPanel {
         });
     }
 
+    /**
+     * Verifica se i tasti premuti appartengono al gruppo WASD
+     * e lancia il metodo HandleMovement per il movimento
+     */
     private void handleKeyPress() {
         int dx = 0, dy = 0;
 
@@ -192,11 +222,21 @@ public class MazeScreen extends JPanel {
         }
     }
 
+    /**
+     * Prende in input la direzione del movimento e gestisce la logica di selezione
+     * della strategia di movimento e dell'esecuzione della stessa.
+     * Si occupa inoltre di selezionare emoji relativa alla strategia.
+     * @param dx
+     * @param dy
+     */
     private void handleMovement(int dx, int dy) {
         String emoji;
         Random random = new Random();
         int strategyChance = random.nextInt(100);
-        MovementStrategy movementStrategy;
+        MovementStrategy movementStrategy; //Pattern Strategy
+        //nel 30% dei casi il robot si muove a caso in una delle quattro caselle vicine possibili (parete permettendo)
+        //nel 30% dei casi il giocatore decide la direzione;
+        //nel 40% dei casi la direzione del robot viene calcolata usando l’algoritmo A∗ (vedi sotto per i dettagli).
         if (strategyChance < 30) {
             movementStrategy = new PlayerMovementStrategy(dx,dy);
             emoji = emojiArray[0];
@@ -207,12 +247,14 @@ public class MazeScreen extends JPanel {
             movementStrategy = new AStarMovementStrategy();
             emoji = emojiArray[2];
             }
+        //Viene eseguito il movimento
         Position currentPos = mainFrame.getMaze().getRobotPosition();
         Position newPos = movementStrategy.getNextPosition(mainFrame.getMaze(), currentPos);
-
+        //Viene verificato se il movimento è valido
         if (mainFrame.getMaze().isValidMove(newPos.getX(), newPos.getY())) {
             mainFrame.getMaze().updateRobot(newPos);
             mainFrame.getMaze().regenerateMap(mainFrame.getDifficulty());
+            //Verifica se il robot e l'uscita sono sulla stessa cella
             if (mainFrame.getMaze().getRobotPosition().equals(mainFrame.getMaze().getExitPosition())) {
                 try {
                     mainFrame.getDbConnection().insertPlayer(mainFrame.getMaze().getPlayer());
@@ -222,14 +264,16 @@ public class MazeScreen extends JPanel {
                 }
                     proceedToNextScreen(mainFrame);
             }
-
             repaint();
             mainFrame.getMaze().getPlayer().addMoves();
             infoLabel.setText(mainFrame.getMaze().getPlayer().getMoves() + emoji);
         }
     }
 
-
+    /**
+     * Procede allo schermo successivo
+     * @param mainFrame
+     */
     private void proceedToNextScreen(MainFrame mainFrame) {
         ScreenFactory screenFactory = new ScreenFactory(mainFrame);
         mainFrame.getMainPanel().add(screenFactory.createScreen(ScreenType.HIGH_SCORE), "WinScreen");
