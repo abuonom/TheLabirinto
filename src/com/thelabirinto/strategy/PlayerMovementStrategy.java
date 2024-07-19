@@ -7,6 +7,11 @@ public class PlayerMovementStrategy implements MovementStrategy {
     private int dx;
     private int dy;
 
+    public PlayerMovementStrategy(int dx, int dy) {
+        this.dx = dx;
+        this.dy = dy;
+    }
+
     public void setDirection(int dx, int dy) {
         this.dx = dx;
         this.dy = dy;

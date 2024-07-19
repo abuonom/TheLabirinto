@@ -4,7 +4,7 @@
     <content url="file://$MODULE_DIR$" dumb="true">
       <sourceFolder url="file://$MODULE_DIR$" type="java-test-resource" />
       <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/src/com/thelabirinto/main/resources" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/com/thelabirinto/resources" type="java-resource" />
     </content>
   </component>
 </module>

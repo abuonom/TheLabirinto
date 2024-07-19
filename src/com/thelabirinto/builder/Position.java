@@ -2,6 +2,9 @@ package com.thelabirinto.builder;
 
 import java.util.Objects;
 
+/**
+ * Oggetto che rappresenta un punto all'interno della matrice
+ */
 public class Position{
     private int x;
     private int y;

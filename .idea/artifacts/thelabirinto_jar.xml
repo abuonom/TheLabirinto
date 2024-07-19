@@ -1,0 +1,10 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="thelabirinto:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/thelabirinto_jar</output-path>
+    <root id="archive" name="thelabirinto.jar">
+      <element id="module-output" name="thelabirinto" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/com/mysql/mysql-connector-j/8.0.33/mysql-connector-j-8.0.33.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/com/google/protobuf/protobuf-java/3.21.9/protobuf-java-3.21.9.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>

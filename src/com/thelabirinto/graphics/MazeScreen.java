@@ -6,11 +6,15 @@ import com.thelabirinto.factory.ScreenType;
 import com.thelabirinto.strategy.AStarMovementStrategy;
 import com.thelabirinto.strategy.MovementStrategy;
 import com.thelabirinto.strategy.PlayerMovementStrategy;
+import com.thelabirinto.strategy.RandomMovementStrategy;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.io.File;
 import java.util.HashSet;
 import java.util.Random;
 import java.util.Set;
@@ -24,30 +28,87 @@ public class MazeScreen extends JPanel {
     private final int mazeRows;
     private final int mazeCols;
     private JLabel infoLabel; // Label per mostrare le informazioni sulle mosse
-    private final String[] emojiArray = {"🕹️", "⭐", "🎲"};
+    private final String[] emojiArray = {"🕹️", "🎲", "⭐"};
     private final Set<Integer> pressedKeys = new HashSet<>();
 
     public MazeScreen(MainFrame mainFrame) {
         this.mainFrame = mainFrame;
         this.mazeRows = mainFrame.getMaze().getWindowHeight() / mainFrame.getMaze().getTileSize();
         this.mazeCols = mainFrame.getMaze().getWindowWidth() / mainFrame.getMaze().getTileSize();
-        loadImages();
-        initializeLayout();
-        setupKeyBindings();
+        if (!loadImages()) {
+            showErrorAndExit();
+        } else {
+            initializeLayout();
+            setupKeyBindings();
+        }
     }
 
-    private void loadImages() {
-        floorImage = new ImageIcon("images/BACK.png").getImage();
-        wallImage = new ImageIcon("images/WALL.png").getImage();
-        robotImage = new ImageIcon("images/RIGHT.png").getImage();
-        exitImage = new ImageIcon("images/EXIT_YES.png").getImage();
+    private boolean loadImages() {
+        String[] imagePaths = {
+                "src/com/thelabirinto/resources/image/BACK.png",
+                "src/com/thelabirinto/resources/image/WALL.png",
+                "src/com/thelabirinto/resources/image/RIGHT.png",
+                "src/com/thelabirinto/resources/image/EXIT_YES.png"
+        };
+
+        for (String path : imagePaths) {
+            File imageFile = new File(path);
+            if (!imageFile.exists()) {
+                System.err.println("File non trovato: " + path);
+                return false;
+            }
+        }
+
+        try {
+            floorImage = new ImageIcon(imagePaths[0]).getImage();
+            wallImage = new ImageIcon(imagePaths[1]).getImage();
+            robotImage = new ImageIcon(imagePaths[2]).getImage();
+            exitImage = new ImageIcon(imagePaths[3]).getImage();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+
+        return true;
     }
+
+
+    private void showErrorAndExit() {
+        setLayout(new BorderLayout());
+
+        JLabel errorLabel = new JLabel("Errore con le texture", SwingConstants.CENTER);
+        errorLabel.setFont(new Font("Arial", Font.BOLD, 24));
+
+        JButton closeButton = new JButton("Chiudi");
+        closeButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.exit(1);
+            }
+        });
+
+        JPanel panel = new JPanel();
+        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+        panel.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        errorLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        closeButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        panel.add(Box.createVerticalGlue());  // Aggiunge spazio verticale prima della label
+        panel.add(errorLabel);
+        panel.add(Box.createRigidArea(new Dimension(0, 20)));  // Aggiunge spazio tra la label e il pulsante
+        panel.add(closeButton);
+        panel.add(Box.createVerticalGlue());  // Aggiunge spazio verticale dopo il pulsante
+
+        add(panel, BorderLayout.CENTER);
+    }
+
 
     private void initializeLayout() {
         setLayout(new BorderLayout());
         JLayeredPane layeredPane = new JLayeredPane();
-        layeredPane.setPreferredSize(new Dimension(mazeCols * mainFrame.getMaze().getTileSize(),
-                mazeRows * mainFrame.getMaze().getTileSize()));
+        layeredPane.setPreferredSize(new Dimension(mazeCols * mainFrame.getMaze().getTileSize() /3,
+                mazeRows * mainFrame.getMaze().getTileSize() / 3));
 
         JPanel mazePanel = new JPanel() {
             @Override
@@ -135,27 +196,31 @@ public class MazeScreen extends JPanel {
         String emoji;
         Random random = new Random();
         int strategyChance = random.nextInt(100);
+        MovementStrategy movementStrategy;
         if (strategyChance < 30) {
+            movementStrategy = new PlayerMovementStrategy(dx,dy);
             emoji = emojiArray[0];
         } else if (strategyChance < 60) {
+            movementStrategy = new RandomMovementStrategy();
             emoji = emojiArray[1];
         } else {
+            movementStrategy = new AStarMovementStrategy();
             emoji = emojiArray[2];
-        }
-        MovementStrategy movementStrategy = new AStarMovementStrategy();
+            }
         Position currentPos = mainFrame.getMaze().getRobotPosition();
-        Position newPos = mainFrame.getMaze().getExitPosition();//movementStrategy.getNextPosition(mainFrame.getMaze(), currentPos);
+        Position newPos = movementStrategy.getNextPosition(mainFrame.getMaze(), currentPos);
 
         if (mainFrame.getMaze().isValidMove(newPos.getX(), newPos.getY())) {
             mainFrame.getMaze().updateRobot(newPos);
             mainFrame.getMaze().regenerateMap(mainFrame.getDifficulty());
             if (mainFrame.getMaze().getRobotPosition().equals(mainFrame.getMaze().getExitPosition())) {
-                try{
-                mainFrame.getDbConnection().insertPlayer(mainFrame.getMaze().getPlayer());
-                }catch (Exception e){
+                try {
+                    mainFrame.getDbConnection().insertPlayer(mainFrame.getMaze().getPlayer());
+                } catch (Exception e) {
                     e.printStackTrace();
                     proceedToNextScreen(mainFrame);
                 }
+                    proceedToNextScreen(mainFrame);
             }
 
             repaint();
@@ -164,11 +229,10 @@ public class MazeScreen extends JPanel {
         }
     }
 
+
     private void proceedToNextScreen(MainFrame mainFrame) {
-        System.out.println("GOIND TO NEXT SCREEN");
         ScreenFactory screenFactory = new ScreenFactory(mainFrame);
         mainFrame.getMainPanel().add(screenFactory.createScreen(ScreenType.HIGH_SCORE), "WinScreen");
         mainFrame.showScreen("WinScreen");
     }
-
 }

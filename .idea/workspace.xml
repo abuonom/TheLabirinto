@@ -1,14 +1,49 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="ArtifactsWorkspaceSettings">
+    <artifacts-to-build>
+      <artifact name="thelabirinto:jar" />
+    </artifacts-to-build>
+  </component>
   <component name="AutoImportSettings">
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8e1e93c0-55b1-411e-a248-a1b4460c9104" name="Changes" comment="Added try&amp;catch for possible DB issue.&#10;Changed type of Difficulty for scalabilty">
+    <list default="true" id="8e1e93c0-55b1-411e-a248-a1b4460c9104" name="Changes" comment="Organized the project&#10;structure.&#10;Added one button on HighScoreScreen that allows player to reselect difficult.&#10;Added JavaDocs">
+      <change afterPath="$PROJECT_DIR$/.idea/artifacts/thelabirinto_jar.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/thelabirinto/resources/META-INF/MANIFEST.MF" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/images/BACK.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/thelabirinto/resources/image/BACK.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/images/COLLECT.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/thelabirinto/resources/image/COLLECT.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/images/DEATH.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/thelabirinto/resources/image/DEATH.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/images/DOWN.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/thelabirinto/resources/image/DOWN.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/images/ENEMY_1.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/thelabirinto/resources/image/ENEMY_1.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/images/ENEMY_2.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/thelabirinto/resources/image/ENEMY_2.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/images/ENEMY_3.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/thelabirinto/resources/image/ENEMY_3.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/images/EXIT_NO.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/thelabirinto/resources/image/EXIT_NO.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/images/EXIT_YES.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/thelabirinto/resources/image/EXIT_YES.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/images/LEFT.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/thelabirinto/resources/image/LEFT.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/images/RIGHT.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/thelabirinto/resources/image/RIGHT.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/images/START.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/thelabirinto/resources/image/START.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/images/UP.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/thelabirinto/resources/image/UP.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/images/WALL.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/thelabirinto/resources/image/WALL.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/thelabirinto/builder/Maze.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/thelabirinto/builder/Maze.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/thelabirinto/builder/MazeBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/thelabirinto/builder/MazeBuilder.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/thelabirinto/builder/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/thelabirinto/builder/Player.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/thelabirinto/builder/Position.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/thelabirinto/builder/Position.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/thelabirinto/connection/DbConnectionSingleton.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/thelabirinto/connection/DbConnectionSingleton.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/thelabirinto/factory/ScreenFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/thelabirinto/factory/ScreenFactory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/thelabirinto/factory/ScreenType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/thelabirinto/factory/ScreenType.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/thelabirinto/graphics/Difficulty.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/thelabirinto/graphics/Difficulty.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/thelabirinto/graphics/HighScoreScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/thelabirinto/graphics/HighScoreScreen.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/thelabirinto/graphics/HomeScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/thelabirinto/graphics/HomeScreen.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/thelabirinto/graphics/MazeScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/thelabirinto/graphics/MazeScreen.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/thelabirinto/strategy/AStarMovementStrategy.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/thelabirinto/strategy/AStarMovementStrategy.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/thelabirinto/graphics/NameInputScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/thelabirinto/graphics/NameInputScreen.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/thelabirinto/main/resources/db.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/thelabirinto/resources/db.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/thelabirinto/strategy/PlayerMovementStrategy.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/thelabirinto/strategy/PlayerMovementStrategy.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/thelabirinto/strategy/RandomMovementStrategy.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/thelabirinto/strategy/RandomMovementStrategy.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/thelabirinto.iml" beforeDir="false" afterPath="$PROJECT_DIR$/thelabirinto.iml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -51,39 +86,43 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "Application.Main.executor": "Run",
-    "OverrideImplement.generate.javadoc": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "main",
-    "ignore.virus.scanning.warn.message": "true",
-    "jdk.selected.JAVA_MODULE": "openjdk-22",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/buono/Desktop/Progetto_Valerio_Del_Trionfo/PROGETTO",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Modules",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "reference.settings.ide.settings.uml",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;Application.Main.executor&quot;: &quot;Run&quot;,
+    &quot;JAR Application.thelabirinto.jar.executor&quot;: &quot;Run&quot;,
+    &quot;OverrideImplement.generate.javadoc&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;extract.method.default.visibility&quot;: &quot;private&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;jdk.selected.JAVA_MODULE&quot;: &quot;openjdk-22&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/buono/Desktop/Progetto_Valerio_Del_Trionfo/PROGETTO&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Artifacts&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settings.ide.settings.uml&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\buono\Desktop\thelabirinto\src\com\thelabirinto\resources" />
+      <recent name="C:\Users\buono\Desktop\thelabirinto\src\com\thelabirinto" />
       <recent name="C:\Users\buono\Desktop\thelabirinto\src\com\thelabirinto\main\resources" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
       <recent name="com.thelabirinto.graphics" />
     </key>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Application.Main">
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.thelabirinto.main.Main" />
       <module name="thelabirinto" />
@@ -97,9 +136,14 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="thelabirinto.jar" type="JarApplication" temporary="true">
+      <option name="JAR_PATH" value="$PROJECT_DIR$/out/artifacts/thelabirinto_jar/thelabirinto.jar" />
+      <method v="2" />
+    </configuration>
     <recent_temporary>
       <list>
         <item itemvalue="Application.Main" />
+        <item itemvalue="JAR Application.thelabirinto.jar" />
       </list>
     </recent_temporary>
   </component>
@@ -149,7 +193,9 @@
       <workItem from="1721115018305" duration="7297000" />
       <workItem from="1721207317325" duration="3000" />
       <workItem from="1721207333198" duration="9000" />
-      <workItem from="1721207358321" duration="11808000" />
+      <workItem from="1721207358321" duration="12179000" />
+      <workItem from="1721288997882" duration="17457000" />
+      <workItem from="1721373594129" duration="1014000" />
     </task>
     <task id="LOCAL-00001" summary="Added all screen, and logic between screen change, added some movement for the robot tile">
       <option name="closed" value="true" />
@@ -263,7 +309,15 @@
       <option name="project" value="LOCAL" />
       <updated>1721211179040</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="Bug Fix:&#10;When the DBConnection was null, MazeScreen was freezing, added try&amp;catch on the getDbConnection().insertPlayer method call">
+      <option name="closed" value="true" />
+      <created>1721244077774</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1721244077774</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -295,7 +349,9 @@
     <MESSAGE value="Added query logic to game logic.&#10;Changed DcConnection, now the instance is on php not only on DB &quot;thelabirinto&quot;.&#10;Removed WinScreen.java, reused HighScoreScreen.java in logic." />
     <MESSAGE value="Added pattern Factory for screen creation, created method GetFocus, that now can be invoked by MainFrame" />
     <MESSAGE value="Added try&amp;catch for possible DB issue.&#10;Changed type of Difficulty for scalabilty" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added try&amp;catch for possible DB issue.&#10;Changed type of Difficulty for scalabilty" />
+    <MESSAGE value="Bug Fix:&#10;When the DBConnection was null, MazeScreen was freezing, added try&amp;catch on the getDbConnection().insertPlayer method call" />
+    <MESSAGE value="Organized the project&#10;structure.&#10;Added one button on HighScoreScreen that allows player to reselect difficult.&#10;Added JavaDocs" />
+    <option name="LAST_COMMIT_MESSAGE" value="Organized the project&#10;structure.&#10;Added one button on HighScoreScreen that allows player to reselect difficult.&#10;Added JavaDocs" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

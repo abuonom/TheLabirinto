@@ -3,7 +3,9 @@ import com.thelabirinto.graphics.Difficulty;
 
 import java.util.Random;
 
-
+/**
+ * Classe costruita tramite Pattern Builder, serve a costruire l'oggetto Maze
+ */
 public final class MazeBuilder extends Player {
     private final Random random = new Random();
     private final int windowWidth;
@@ -15,6 +17,13 @@ public final class MazeBuilder extends Player {
     private final Difficulty difficulty;
     private Player player;
 
+    /**
+     * Costruttore del builder
+     * @param windowWidth larghezza della finestra
+     * @param windowHeight altezza della finestra
+     * @param tileSize grandezza delle tile
+     * @param difficulty difficoltà selezionata dal giocatore
+     */
     public MazeBuilder(int windowWidth, int windowHeight, int tileSize, Difficulty difficulty) {
         this.windowWidth = windowWidth;
         this.windowHeight = windowHeight;
@@ -25,12 +34,19 @@ public final class MazeBuilder extends Player {
         this.map = new int[rows][cols];
     }
 
+    /**
+     * Genera il parametro exitPosition di Maze
+     * @return istanza del builder
+     */
     public MazeBuilder addExit() {
         exitPosition = new Position(0, random.nextInt(map[0].length));
         map[exitPosition.getX()][exitPosition.getY()] = 2;
         return this;
     }
-
+    /**
+     * Genera il parametro robotPosition sempre su una riga casuale dell'ultima colonna
+     * @return istanza del builder
+     */
     public MazeBuilder addRobot() {
         int lastRow = map.length - 1;
         int minCol = 1;
@@ -43,6 +59,11 @@ public final class MazeBuilder extends Player {
         return this;
     }
 
+    /**
+     * Genera gli ostacoli nella mappa, calcolando il loro numero in base alla grandezza della mappa
+     * e alla difficoltà selezionata dal giocore
+     * @return istanza builder
+     */
     public MazeBuilder addWalls() {
         int maxObstacles = (int) ((map.length * map[0].length) / difficulty.getValue());
         int obstacle = 0;
@@ -59,6 +80,10 @@ public final class MazeBuilder extends Player {
         return this;
     }
 
+    /**
+     * Aggiunge i bordi alla mappa
+     * @return istanza builder
+     */
     public MazeBuilder addEdges() {
         for (int i = 0; i < map.length; i++) {
             map[i][0] = 1;
@@ -71,11 +96,21 @@ public final class MazeBuilder extends Player {
         return this;
     }
 
+    /**
+     * Genera il parametro Player di Maze
+     * @param name
+     * @param surname
+     * @return
+     */
     public MazeBuilder setPlayer(String name, String surname) {
         this.player = new Player(name,surname,0,difficulty.getName());
         return this;
     }
 
+    /**
+     * Costruisce l'oggetto Maze
+     * @return
+     */
     public Maze build() {
         return new Maze(map, robotPosition, exitPosition, windowWidth, windowHeight, tileSize, player);
     }

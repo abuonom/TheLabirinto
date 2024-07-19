@@ -25,7 +25,7 @@ public class HomeScreen extends JPanel {
         add(titleLabel, gbc);
 
         // Add the image below the title
-        ImageIcon startIcon = new ImageIcon("images/START.png");
+        ImageIcon startIcon = new ImageIcon("src/com/thelabirinto/resources/image/START.png");
         JLabel imageLabel = new JLabel(startIcon);
         gbc.gridy = 1;
         add(imageLabel, gbc);

@@ -1,5 +1,8 @@
 package com.thelabirinto.builder;
 
+/**
+ * Classe che rappresenta l'entity della table presente nel database
+ */
 public class Player{
     private String name;
     private String surname;
@@ -47,6 +50,9 @@ public class Player{
         return difficulty;
     }
 
+    /**
+     * Aumenta le mosse di 1
+     */
     public void addMoves() {
         this.moves++;
     }

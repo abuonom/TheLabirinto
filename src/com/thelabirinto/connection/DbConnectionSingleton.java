@@ -9,6 +9,10 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.Properties;
 
+/**
+ * Classe creata seguendo pattern Singleton per gestire la connessione al database.
+ * Fornisce metodi per connettersi al database, creare tabelle ed eseguire operazioni CRUD.
+ */
 public class DbConnectionSingleton {
 
     private static final String PROPERTIES_FILE = "db.properties";
@@ -18,46 +22,46 @@ public class DbConnectionSingleton {
     private Connection connection = null;
     private static DbConnectionSingleton dbConnectionInstance;
 
+    /**
+     * Costruttore privato per prevenire l'istanza.
+     * Carica le proprietà del database e inizializza il driver JDBC.
+     */
     private DbConnectionSingleton() {
         loadProperties();
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
-            // Handle exception: Driver class not found
         }
     }
 
+    /**
+     * Carica le proprietà del database da un file di proprietà.
+     */
     private void loadProperties() {
         InputStream input = null;
         try {
-            // Use the ClassLoader to load the properties file from the classpath
             input = getClass().getClassLoader().getResourceAsStream(PROPERTIES_FILE);
             if (input == null) {
-                throw new IOException("Unable to find " + PROPERTIES_FILE);
+                throw new IOException("Impossibile trovare " + PROPERTIES_FILE);
             }
 
-            // Load the properties from the input stream
+            // Carica le proprietà dall'input stream
             Properties prop = new Properties();
             prop.load(input);
 
-            // Retrieve the property values
+            // Recupera i valori delle proprietà
             dbUrl = prop.getProperty("db.url");
             dbUser = prop.getProperty("db.user");
             dbPassword = prop.getProperty("db.password");
 
-            // Validate the properties
             if (dbUrl == null || dbUser == null || dbPassword == null) {
-                throw new IOException("Missing database configuration in " + PROPERTIES_FILE);
+                throw new IOException("Configurazione del database mancante in " + PROPERTIES_FILE);
             }
         } catch (IOException ex) {
-            // Print the stack trace for debugging purposes
             ex.printStackTrace();
-
-            // Handle the exception: print a user-friendly error message
-            System.err.println("Failed to load database properties file: " + ex.getMessage());
+            System.err.println("Caricamento del file di proprietà del database fallito: " + ex.getMessage());
         } finally {
-            // Ensure the input stream is closed to prevent resource leaks
             if (input != null) {
                 try {
                     input.close();
@@ -68,6 +72,11 @@ public class DbConnectionSingleton {
         }
     }
 
+    /**
+     * Restituisce l'istanza singleton della connessione al database.
+     *
+     * @return l'istanza singleton di DbConnectionSingleton
+     */
     public static DbConnectionSingleton getInstance() {
         if (dbConnectionInstance == null) {
             dbConnectionInstance = new DbConnectionSingleton();
@@ -75,6 +84,9 @@ public class DbConnectionSingleton {
         return dbConnectionInstance;
     }
 
+    /**
+     * Stabilisce una connessione al database.
+     */
     public void buildConnection() {
         try {
             if (connection == null || connection.isClosed()) {
@@ -83,10 +95,14 @@ public class DbConnectionSingleton {
             }
         } catch (SQLException e) {
             e.printStackTrace();
-            // Handle exception: SQL connection error
         }
     }
 
+    /**
+     * Restituisce la connessione corrente al database. Se la connessione è chiusa o nulla, tenterà di riconnettersi.
+     *
+     * @return la connessione corrente al database
+     */
     public Connection getConnection() {
         try {
             if (connection == null || connection.isClosed()) {
@@ -100,12 +116,20 @@ public class DbConnectionSingleton {
         return connection;
     }
 
+    /**
+     * Cambia la connessione al database specificato.
+     *
+     * @throws SQLException se si verifica un errore di accesso al database
+     */
     private void switchToDatabase() throws SQLException {
         try (Statement stmt = connection.createStatement()) {
             stmt.executeUpdate("USE thelabirinto");
         }
     }
 
+    /**
+     * Chiude la connessione corrente al database.
+     */
     public void closeConnection() {
         try {
             if (connection != null && !connection.isClosed()) {
@@ -116,6 +140,9 @@ public class DbConnectionSingleton {
         }
     }
 
+    /**
+     * Crea il database e le tabelle se non esistono già.
+     */
     public void createDatabase() {
         String createDatabaseSQL = "CREATE DATABASE IF NOT EXISTS thelabirinto";
         String createTableSQL = "CREATE TABLE IF NOT EXISTS player (" +
@@ -123,19 +150,24 @@ public class DbConnectionSingleton {
                 "first_name VARCHAR(50), " +
                 "last_name VARCHAR(50), " +
                 "moves INT, " +
-                "difficulty VARCHAR(50))";  // Changed to VARCHAR(50)
+                "difficulty VARCHAR(50))";
 
         try (Connection conn = getInstance().getConnection();
              Statement stmt = conn.createStatement()) {
             stmt.executeUpdate(createDatabaseSQL);
-            switchToDatabase();  // Ensure the connection is using the correct database
+            switchToDatabase();  // Si assicura che la connessione utilizzi il database corretto
             stmt.executeUpdate(createTableSQL);
-            } catch (SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
-            // Handle exception: SQL execution error
         }
     }
 
+    /**
+     * Inserisce un nuovo giocatore nel database.
+     *
+     * @param player il giocatore da inserire
+     * @return true se l'inserimento è riuscito, false altrimenti
+     */
     public boolean insertPlayer(Player player) {
         String sqlPlayerInsert = "INSERT INTO player(first_name, last_name, moves, difficulty) VALUES (?, ?, ?, ?)";
         try (Connection conn = getInstance().getConnection();
@@ -144,24 +176,28 @@ public class DbConnectionSingleton {
             preparedStatement.setString(1, player.getName());
             preparedStatement.setString(2, player.getSurname());
             preparedStatement.setInt(3, player.getMoves());
-            preparedStatement.setString(4, player.getDifficulty());  // Changed to setString
+            preparedStatement.setString(4, player.getDifficulty());
             preparedStatement.executeUpdate();
-            return true; // Success
+            return true;
         } catch (SQLException e) {
             e.printStackTrace();
-            // Handle exception: SQL execution error
-            return false; // Failure
+            return false;
         }
     }
 
-
+    /**
+     * Recupera i primi 50 giocatori per numero di mosse per un dato livello di difficoltà.
+     *
+     * @param difficulty il livello di difficoltà da filtrare
+     * @return una lista dei migliori giocatori per la difficoltà specificata
+     */
     public ArrayList<Player> getTopPlayersByDifficulty(Difficulty difficulty) {
         String sqlSelectTop5 = "SELECT * FROM player WHERE difficulty = ? ORDER BY moves ASC LIMIT 50";
         ArrayList<Player> topPlayers = new ArrayList<>();
         try (Connection conn = getInstance().getConnection();
              PreparedStatement preparedStatement = conn.prepareStatement(sqlSelectTop5)) {
 
-            preparedStatement.setString(1, difficulty.getName());  // Changed to setString
+            preparedStatement.setString(1, difficulty.getName());
             ResultSet rs = preparedStatement.executeQuery();
 
             while (rs.next()) {
@@ -171,7 +207,6 @@ public class DbConnectionSingleton {
             }
         } catch (SQLException e) {
             e.printStackTrace();
-            // Handle exception: SQL execution error
         }
         return topPlayers;
     }
